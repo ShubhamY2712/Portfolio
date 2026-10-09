@@ -4,6 +4,8 @@ import type { Profile, ResearchPaper, Teardown } from "@/lib/content";
 import {
   updateProfile,
   updateHomepageText,
+  updateResearchDetails,
+  uploadResearchCover,
   updateProfilePhoto,
   updateResume,
   updateResearchPaper,
@@ -113,6 +115,30 @@ export default async function AdminDashboard() {
           <input id="paper-upload" type="file" name="pdf" accept="application/pdf" className="file-input mb-3" />
           <SaveButton label="Upload PDF" />
         </form>
+
+        <div className="mt-6 border-t border-line pt-6">
+          <h3 className="font-display text-base font-semibold text-ink mb-1">Publication details</h3>
+          <p className="text-xs text-ink-soft mb-4">Shown next to the book cover. Needs <code>migration-005.sql</code>.</p>
+          <form action={updateResearchDetails} className="space-y-3 mb-6">
+            <Field label="Series" name="series" defaultValue={paper?.series} />
+            <Field label="Series link" name="series_url" defaultValue={paper?.series_url} />
+            <Field label="Volume" name="volume" defaultValue={paper?.volume} />
+            <Field label="ISBN" name="isbn" defaultValue={paper?.isbn} />
+            <Field label="DOI link (https://doi.org/…)" name="doi" defaultValue={paper?.doi} />
+            <Field label="BISAC" name="bisac" defaultValue={paper?.bisac} />
+            <SaveButton label="Save details" />
+          </form>
+          <form action={uploadResearchCover}>
+            <label htmlFor="research-cover-upload" className="block text-sm text-ink-soft mb-1">Book cover image (optional)</label>
+            <p className="text-xs text-ink-soft mb-2">The cover you sent is already built into the site; upload only to replace it.</p>
+            {paper?.cover_url && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={paper.cover_url} alt="Current book cover" className="mb-2 h-32 w-auto rounded" />
+            )}
+            <input id="research-cover-upload" type="file" name="cover" accept="image/*" className="file-input mb-3" />
+            <SaveButton label="Upload cover" />
+          </form>
+        </div>
       </section>
 
       {/* Teardown */}

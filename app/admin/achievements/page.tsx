@@ -20,7 +20,7 @@ export default async function AchievementsAdmin() {
 
       {!cardsReady && (
         <p className="mb-6 rounded-md border border-accent/40 bg-accent-soft px-3 py-2 text-sm text-ink">
-          Run <code>supabase/migration-004.sql</code> in the Supabase SQL Editor to enable card titles and icons.
+          Run <code>supabase/migration-004.sql</code> and <code>migration-005.sql</code> in the Supabase SQL Editor to enable card titles, icons and issuer.
         </p>
       )}
 
@@ -63,6 +63,16 @@ function CardFields({ idPrefix, value }: { idPrefix: string; value?: Achievement
           required
           placeholder="e.g. Best Social Impact Award"
           defaultValue={value?.title || ""}
+          className="admin-input"
+        />
+      </div>
+      <div>
+        <label htmlFor={id("issuer")} className="mb-1 block text-sm text-ink-soft">Issued by (optional)</label>
+        <input
+          id={id("issuer")}
+          name="issuer"
+          placeholder="e.g. National Service Scheme (NSS)"
+          defaultValue={value?.issuer || ""}
           className="admin-input"
         />
       </div>

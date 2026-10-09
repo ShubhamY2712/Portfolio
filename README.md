@@ -42,6 +42,10 @@ Supabase SQL Editor:
   your full skills list in 8 groups, and award-card titles for achievements.
   Safe to run again.
 
+- `supabase/migration-005.sql` (run after 004): research paper publication
+  details (DOI, ISBN, series, volume, BISAC), 3 new certifications, 2 new
+  achievements with an "issued by" line, and new ordering. Safe to run again.
+
 Paste the SQL **text** into the SQL Editor, not the file name.
 
 ## Deploying

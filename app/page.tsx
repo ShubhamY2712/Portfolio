@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, FileText } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimatedSection from "@/components/AnimatedSection";
@@ -9,6 +9,7 @@ import SectionHeading from "@/components/SectionHeading";
 import AboutSection from "@/components/AboutSection";
 import SkillsSection from "@/components/SkillsSection";
 import RecognitionSection from "@/components/RecognitionSection";
+import ResearchSection from "@/components/ResearchSection";
 import { CursorSpotlight } from "@/components/Interactive";
 import { createClient } from "@/lib/supabase/server";
 import { safeHref, toStringArray } from "@/lib/content";
@@ -28,6 +29,7 @@ const SECTION: string = "max-w-content mx-auto px-5 sm:px-6 py-14 sm:py-20";
 
 // Bundled in /public; a photo uploaded in /admin takes priority.
 const DEFAULT_PHOTO: string = "/shubham-yawalkar.jpg";
+const DEFAULT_RESEARCH_COVER: string = "/research-cover.jpg";
 
 // Used only until migration-004.sql has been run (or if a field is left empty).
 const DEFAULT_PHRASES: string[] = [
@@ -72,9 +74,6 @@ export default async function Home() {
   const name: string = profile?.name || "";
   const phrases: string[] = toStringArray(profile?.typing_phrases);
   const contactLine: string = profile?.statement || DEFAULT_CONTACT_LINE;
-  // Show the admin note only if it adds something beyond "co-authored".
-  const researchNote: string | null =
-    researchPaper?.note && !/co-?author/i.test(researchPaper.note) ? researchPaper.note : null;
 
   return (
     <>
@@ -170,37 +169,9 @@ export default async function Home() {
 
         {/* Research */}
         {researchPaper?.title && (
-          <AnimatedSection id="research" ariaLabelledby="research-title" className={SECTION}>
-            <SectionHeading id="research-title" eyebrow="Research" title="Published work" />
-            <article className="card flex flex-col gap-5 p-6 sm:flex-row sm:items-start sm:p-8">
-              <span
-                aria-hidden="true"
-                className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-accent/30 bg-accent-soft text-accent"
-              >
-                <FileText size={22} />
-              </span>
-              <div className="min-w-0 flex-1">
-                <span className="badge-done mb-3">Co-authored</span>
-                <h3 className="font-display text-xl font-semibold text-ink sm:text-2xl">{researchPaper.title}</h3>
-                <p className="mt-2 text-sm text-ink-soft">
-                  {researchPaper.publication}
-                  {researchPaper.publication && researchPaper.date ? " · " : ""}
-                  {researchPaper.date}
-                </p>
-                {researchNote && <p className="mt-2 text-xs text-ink-soft">{researchNote}</p>}
-                {researchPaper.pdf_link && (
-                  <a
-                    href={researchPaper.pdf_link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline"
-                  >
-                    Read the paper (PDF) <ArrowUpRight size={15} aria-hidden="true" />
-                  </a>
-                )}
-              </div>
-            </article>
-          </AnimatedSection>
+          <section id="research" aria-labelledby="research-title" className={SECTION}>
+            <ResearchSection paper={researchPaper} coverUrl={researchPaper.cover_url || DEFAULT_RESEARCH_COVER} />
+          </section>
         )}
 
         {/* Recognition: achievements + certifications */}

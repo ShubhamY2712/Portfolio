@@ -165,6 +165,8 @@ export type Achievement = {
   title?: string | null;
   detail?: string | null;
   icon?: string | null;
+  // Added in migration-005.sql.
+  issuer?: string | null;
 };
 
 export const ACHIEVEMENT_ICONS = ["trophy", "users", "book", "feather", "award", "star"] as const;
@@ -201,6 +203,14 @@ export type ResearchPaper = {
   date: string | null;
   pdf_link: string | null;
   note: string | null;
+  // Added in migration-005.sql.
+  cover_url?: string | null;
+  doi?: string | null;
+  isbn?: string | null;
+  series?: string | null;
+  series_url?: string | null;
+  volume?: string | null;
+  bisac?: string | null;
 };
 
 export type Teardown = {

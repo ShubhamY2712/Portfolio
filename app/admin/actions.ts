@@ -118,6 +118,7 @@ export async function addAchievement(formData: FormData): Promise<void> {
     date: formText(formData, "date"),
     title: formText(formData, "title"),
     detail: formText(formData, "detail"),
+    issuer: formText(formData, "issuer"),
     icon: achievementIcon(formData),
   });
   revalidatePath("/");
@@ -137,6 +138,7 @@ export async function updateAchievement(id: string, formData: FormData): Promise
     .update({
       title: formText(formData, "title"),
       detail: formText(formData, "detail"),
+      issuer: formText(formData, "issuer"),
       date: formText(formData, "date"),
       icon: achievementIcon(formData),
     })
@@ -331,6 +333,34 @@ export async function uploadResearchPaperPdf(formData: FormData): Promise<void> 
   const url = await uploadFile(file, "research-paper");
   const supabase = createClient();
   await supabase.from("research_paper").update({ pdf_link: url }).eq("id", 1);
+  revalidatePath("/");
+  revalidatePath("/admin");
+}
+
+// Publication details (requires supabase/migration-005.sql).
+export async function updateResearchDetails(formData: FormData): Promise<void> {
+  const supabase = createClient();
+  await supabase
+    .from("research_paper")
+    .update({
+      series: formText(formData, "series"),
+      series_url: formUrl(formData, "series_url"),
+      volume: formText(formData, "volume"),
+      isbn: formText(formData, "isbn"),
+      doi: formUrl(formData, "doi"),
+      bisac: formText(formData, "bisac"),
+    })
+    .eq("id", 1);
+  revalidatePath("/");
+  revalidatePath("/admin");
+}
+
+export async function uploadResearchCover(formData: FormData): Promise<void> {
+  const file = formData.get("cover") as File | null;
+  if (!file || file.size === 0) return;
+  const url: string = await uploadFile(file, "research-cover");
+  const supabase = createClient();
+  await supabase.from("research_paper").update({ cover_url: url }).eq("id", 1);
   revalidatePath("/");
   revalidatePath("/admin");
 }

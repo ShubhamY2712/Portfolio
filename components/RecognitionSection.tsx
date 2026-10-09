@@ -26,6 +26,9 @@ function cardText(a: Achievement): { title: string; detail: string } {
 }
 
 function orgInitials(org: string | null): string {
+  const first: string = (org || "").trim().split(/\s+/)[0] || "";
+  // Keep short acronyms as-is (e.g. "AWS").
+  if (/^[A-Z]{2,4}$/.test(first)) return first;
   const words: string[] = (org || "").replace(/[^A-Za-z0-9 .]/g, " ").split(/\s+/).filter(Boolean);
   return words.slice(0, 2).map((w: string) => w[0]?.toUpperCase() ?? "").join("") || "C";
 }
@@ -105,6 +108,9 @@ export default function RecognitionSection({
                       >
                         {title}
                       </h4>
+                      {a.issuer && (
+                        <p className="mt-1 text-sm font-medium text-accent-light/80">Issued by {a.issuer}</p>
+                      )}
                       {detail && <p className="mt-2 max-w-prose leading-relaxed text-ink-soft">{detail}</p>}
                     </div>
                   </article>
