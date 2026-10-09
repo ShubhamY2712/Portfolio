@@ -1,8 +1,9 @@
 import { createClient } from "@/lib/supabase/server";
 import { addSkill, deleteSkill, setSkillCategory } from "../actions";
+import { SKILL_GROUPS, skillGroupOf } from "@/lib/content";
 import type { Skill } from "@/lib/content";
 
-const LABELS: Record<string, string> = { product: "Product & business", technical: "Technical" };
+type Group = (typeof SKILL_GROUPS)[number];
 
 export default async function SkillsAdmin() {
   const supabase = createClient();
@@ -14,11 +15,11 @@ export default async function SkillsAdmin() {
   return (
     <div className="max-w-xl">
       <h1 className="font-display text-2xl font-semibold text-ink mb-1">Skills</h1>
-      <p className="text-sm text-ink-soft mb-6">Shown on the homepage in two groups: Product &amp; business, and Technical.</p>
+      <p className="text-sm text-ink-soft mb-6">Shown on the homepage grouped into cards. Pick the group for each skill.</p>
 
       {!categoriesReady && (
         <p className="mb-6 rounded-md border border-accent/40 bg-accent-soft px-3 py-2 text-sm text-ink">
-          Run <code>supabase/migration-003.sql</code> in the Supabase SQL Editor to enable skill groups.
+          Run <code>supabase/migration-004.sql</code> in the Supabase SQL Editor to enable skill groups.
         </p>
       )}
 
@@ -26,9 +27,12 @@ export default async function SkillsAdmin() {
         <label htmlFor="new-skill" className="sr-only">New skill</label>
         <input id="new-skill" name="label" placeholder="New skill" required className="admin-input sm:flex-1" />
         <label htmlFor="new-skill-category" className="sr-only">Group</label>
-        <select id="new-skill-category" name="category" defaultValue="technical" className="admin-input sm:w-48">
-          <option value="product">{LABELS.product}</option>
-          <option value="technical">{LABELS.technical}</option>
+        <select id="new-skill-category" name="category" defaultValue="languages" className="admin-input sm:w-48">
+          {SKILL_GROUPS.map((g: Group) => (
+            <option key={g.key} value={g.key}>
+              {g.label}
+            </option>
+          ))}
         </select>
         <button className="bg-primary text-paper text-sm font-semibold px-4 py-2 rounded-md hover:bg-accent-light">
           Add
@@ -48,11 +52,14 @@ export default async function SkillsAdmin() {
                 <select
                   id={"cat-" + s.id}
                   name="category"
-                  defaultValue={s.category === "product" ? "product" : "technical"}
+                  defaultValue={skillGroupOf(s.category)}
                   className="rounded-md border border-line bg-paper px-2 py-1 text-xs text-ink"
                 >
-                  <option value="product">{LABELS.product}</option>
-                  <option value="technical">{LABELS.technical}</option>
+                  {SKILL_GROUPS.map((g: Group) => (
+                    <option key={g.key} value={g.key}>
+                      {g.label}
+                    </option>
+                  ))}
                 </select>
                 <button className="text-xs text-accent hover:underline">Save</button>
               </form>

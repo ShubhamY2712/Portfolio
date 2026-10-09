@@ -71,6 +71,7 @@ export default async function TeardownPage() {
         linkedin={profile?.linkedin}
         github={profile?.github}
         resumeUrl={profile?.resume_url}
+        location={profile?.location}
         contactLine={profile?.statement || undefined}
       />
     </>

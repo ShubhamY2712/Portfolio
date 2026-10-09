@@ -39,7 +39,7 @@ export default async function AdminDashboard() {
           <Field label="Location" name="location" defaultValue={profile?.location} />
           <Field label="LinkedIn URL" name="linkedin" defaultValue={profile?.linkedin} />
           <Field label="GitHub URL" name="github" defaultValue={profile?.github} />
-          <TextArea label="Summary" name="summary" defaultValue={profile?.summary} />
+          <TextArea label="About text (blank line = new paragraph, wrap words in [brackets] to highlight them)" name="summary" defaultValue={profile?.summary} />
           <SaveButton />
         </form>
       </section>
@@ -156,7 +156,7 @@ function TextArea({ label, name, defaultValue }: { label: string; name: string; 
         id={id}
         name={name}
         defaultValue={defaultValue || ""}
-        rows={4}
+        rows={name === "summary" ? 9 : 4}
         className="admin-input"
       />
     </div>

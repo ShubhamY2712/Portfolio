@@ -1,12 +1,15 @@
 import Link from "next/link";
-import type { ReactNode } from "react";
-import { ArrowUpRight, Code2, FileText, Lightbulb } from "lucide-react";
+import { ArrowUpRight, FileText } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimatedSection from "@/components/AnimatedSection";
 import HeroIntro from "@/components/HeroIntro";
 import FeaturedProject from "@/components/FeaturedProject";
 import SectionHeading from "@/components/SectionHeading";
+import AboutSection from "@/components/AboutSection";
+import SkillsSection from "@/components/SkillsSection";
+import RecognitionSection from "@/components/RecognitionSection";
+import { CursorSpotlight } from "@/components/Interactive";
 import { createClient } from "@/lib/supabase/server";
 import { safeHref, toStringArray } from "@/lib/content";
 import type {
@@ -22,6 +25,16 @@ import type {
 export const revalidate = 0;
 
 const SECTION: string = "max-w-content mx-auto px-5 sm:px-6 py-14 sm:py-20";
+
+// Bundled in /public; a photo uploaded in /admin takes priority.
+const DEFAULT_PHOTO: string = "/shubham-yawalkar.jpg";
+
+// Used only until migration-004.sql has been run (or if a field is left empty).
+const DEFAULT_PHRASES: string[] = [
+  "an aspiring AI Product Manager",
+  "a Full Stack Developer",
+  "a co-author of published AI research",
+];
 
 // Used only until migration-003.sql has been run (or if the field is left empty).
 const DEFAULT_CONTACT_LINE: string =
@@ -55,9 +68,6 @@ export default async function Home() {
   const achievements = (achievementsRes.data ?? []) as Achievement[];
   const certifications = (certificationsRes.data ?? []) as Certification[];
   const researchPaper = researchRes.data as ResearchPaper | null;
-  // Skills without a category (before migration-003.sql) count as technical.
-  const productSkills: Skill[] = skills.filter((sk: Skill) => sk.category === "product");
-  const technicalSkills: Skill[] = skills.filter((sk: Skill) => sk.category !== "product");
 
   const name: string = profile?.name || "";
   const phrases: string[] = toStringArray(profile?.typing_phrases);
@@ -68,44 +78,37 @@ export default async function Home() {
 
   return (
     <>
+      <CursorSpotlight />
       <Navbar name={name} resumeUrl={profile?.resume_url} />
 
       <main id="main">
         <HeroIntro
           name={name}
-          photoUrl={profile?.photo_url}
+          photoUrl={profile?.photo_url || DEFAULT_PHOTO}
           resumeUrl={profile?.resume_url}
-          intro={profile?.hero_intro || "I design and build"}
+          intro={profile?.hero_intro || "I shape and build"}
           headline={profile?.hero_headline || "AI products,"}
           highlight={profile?.hero_highlight || "end to end."}
-          phrases={phrases.length > 0 ? phrases : profile?.tagline ? [profile.tagline] : []}
+          phrases={phrases.length > 0 ? phrases : DEFAULT_PHRASES}
           currentlyText={profile?.currently_text}
           currentlyHref={safeHref(profile?.currently_url)}
         />
 
-        {/* About + skills */}
-        <AnimatedSection id="about" ariaLabelledby="about-title" className={SECTION}>
-          <SectionHeading id="about-title" eyebrow="About" title="A little about me" align="center" />
-          {profile?.summary && (
-            <p className="mx-auto max-w-3xl text-center text-lg leading-relaxed text-ink-soft sm:text-xl">
-              {profile.summary}
-            </p>
-          )}
-        </AnimatedSection>
+        {/* About */}
+        {profile?.summary && (
+          <section id="about" aria-labelledby="about-title" className={SECTION}>
+            <AboutSection summary={profile.summary} />
+          </section>
+        )}
 
-        {/* Skills: product + technical */}
+        {/* Skills */}
         {skills.length > 0 && (
-          <AnimatedSection id="skills" ariaLabelledby="skills-title" className={SECTION}>
-            <SectionHeading id="skills-title" eyebrow="Skills" title="Product & technical toolkit" align="center" />
-            <div className="mx-auto grid max-w-5xl gap-5 md:grid-cols-2 md:gap-6">
-              <SkillGroup
-                title="Product & business"
-                icon={<Lightbulb size={22} strokeWidth={1.7} />}
-                skills={productSkills}
-              />
-              <SkillGroup title="Technical" icon={<Code2 size={22} strokeWidth={1.7} />} skills={technicalSkills} />
-            </div>
-          </AnimatedSection>
+          <section id="skills" aria-labelledby="skills-title" className={SECTION}>
+            <AnimatedSection>
+              <SectionHeading id="skills-title" eyebrow="Skills" title="Product & technical toolkit" align="center" />
+            </AnimatedSection>
+            <SkillsSection skills={skills} />
+          </section>
         )}
 
         {/* Featured projects */}
@@ -200,52 +203,12 @@ export default async function Home() {
           </AnimatedSection>
         )}
 
-        {/* Achievements + certifications */}
-        <AnimatedSection id="achievements" ariaLabelledby="achievements-title" className={SECTION}>
-          <SectionHeading id="achievements-title" eyebrow="Recognition" title="Achievements & certifications" />
-          <div className="grid gap-12 md:grid-cols-2 md:gap-16">
-            <div>
-              <h3 className="mb-6 font-display text-lg font-semibold text-ink">Achievements</h3>
-              <ol className="relative space-y-7 border-l border-line pl-6">
-                {achievements.map((a: Achievement) => (
-                  <li key={a.id} className="relative">
-                    <span
-                      aria-hidden="true"
-                      className="absolute -left-[29px] top-1.5 h-2.5 w-2.5 rounded-full bg-accent shadow-[0_0_12px_rgba(255,197,61,0.7)]"
-                    />
-                    {a.date && <p className="mb-1 text-xs font-medium uppercase tracking-wide text-accent-light/80">{a.date}</p>}
-                    <p className="leading-relaxed text-ink/90">{a.text}</p>
-                  </li>
-                ))}
-              </ol>
-            </div>
-
-            <div>
-              <h3 className="mb-6 font-display text-lg font-semibold text-ink">Certifications</h3>
-              <ul className="divide-y divide-line overflow-hidden rounded-2xl border border-line bg-surface">
-                {certifications.map((c: Certification) => {
-                  const done: boolean = c.status === "done";
-                  return (
-                    <li key={c.id} className="flex flex-col gap-2 p-4 sm:flex-row sm:items-start sm:justify-between sm:gap-4 sm:p-5">
-                      <div className="min-w-0">
-                        <p className="text-ink">{c.text}</p>
-                        <p className="mt-0.5 text-sm text-ink-soft">
-                          {c.org}
-                          {c.org && c.date ? " · " : ""}
-                          {c.date}
-                        </p>
-                      </div>
-                      <span className={done ? "badge-done" : "badge-progress"}>
-                        <span aria-hidden="true" className={"h-1.5 w-1.5 rounded-full " + (done ? "bg-ink-soft" : "bg-accent")} />
-                        {done ? "Completed" : "In progress"}
-                      </span>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          </div>
-        </AnimatedSection>
+        {/* Recognition: achievements + certifications */}
+        {(achievements.length > 0 || certifications.length > 0) && (
+          <section id="achievements" aria-labelledby="recognition-title" className={SECTION}>
+            <RecognitionSection achievements={achievements} certifications={certifications} />
+          </section>
+        )}
       </main>
 
       <Footer
@@ -254,32 +217,9 @@ export default async function Home() {
         linkedin={profile?.linkedin}
         github={profile?.github}
         resumeUrl={profile?.resume_url}
+        location={profile?.location}
         contactLine={contactLine}
       />
     </>
-  );
-}
-
-function SkillGroup({ title, icon, skills }: { title: string; icon: ReactNode; skills: Skill[] }) {
-  if (skills.length === 0) return null;
-  return (
-    <div className="card-glow p-6 sm:p-8">
-      <h3 className="mb-5 flex items-center gap-3 font-display text-lg font-semibold text-ink">
-        <span
-          aria-hidden="true"
-          className="flex h-10 w-10 items-center justify-center rounded-xl border border-accent/30 bg-accent-soft text-accent"
-        >
-          {icon}
-        </span>
-        {title}
-      </h3>
-      <ul className="flex flex-wrap gap-2">
-        {skills.map((skill: Skill) => (
-          <li key={skill.id} className="chip">
-            {skill.label}
-          </li>
-        ))}
-      </ul>
-    </div>
   );
 }

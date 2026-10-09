@@ -3,7 +3,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { formText, formUrl, HIGHLIGHT_ICONS, SKILL_CATEGORIES } from "@/lib/content";
+import { ACHIEVEMENT_ICONS, formText, formUrl, HIGHLIGHT_ICONS, SKILL_CATEGORIES } from "@/lib/content";
 
 // ---------- Profile ----------
 export async function updateProfile(formData: FormData): Promise<void> {
@@ -91,11 +91,11 @@ export async function addSkill(formData: FormData): Promise<void> {
 }
 
 function skillCategory(formData: FormData): string {
-  const value: string = formText(formData, "category") || "technical";
-  return (SKILL_CATEGORIES as readonly string[]).includes(value) ? value : "technical";
+  const value: string = formText(formData, "category") || "tools";
+  return SKILL_CATEGORIES.includes(value) ? value : "tools";
 }
 
-// Requires supabase/migration-003.sql (adds skills.category).
+// Requires supabase/migration-003.sql / 004.sql (skills.category).
 export async function setSkillCategory(id: string, formData: FormData): Promise<void> {
   const supabase = createClient();
   await supabase.from("skills").update({ category: skillCategory(formData) }).eq("id", id);
@@ -114,9 +114,33 @@ export async function deleteSkill(id: string): Promise<void> {
 export async function addAchievement(formData: FormData): Promise<void> {
   const supabase = createClient();
   await supabase.from("achievements").insert({
-    text: formData.get("text"),
-    date: formData.get("date"),
+    text: formText(formData, "text") || formText(formData, "title"),
+    date: formText(formData, "date"),
+    title: formText(formData, "title"),
+    detail: formText(formData, "detail"),
+    icon: achievementIcon(formData),
   });
+  revalidatePath("/");
+  revalidatePath("/admin/achievements");
+}
+
+function achievementIcon(formData: FormData): string {
+  const icon: string = formText(formData, "icon") || "award";
+  return (ACHIEVEMENT_ICONS as readonly string[]).includes(icon) ? icon : "award";
+}
+
+// Card fields (requires supabase/migration-004.sql).
+export async function updateAchievement(id: string, formData: FormData): Promise<void> {
+  const supabase = createClient();
+  await supabase
+    .from("achievements")
+    .update({
+      title: formText(formData, "title"),
+      detail: formText(formData, "detail"),
+      date: formText(formData, "date"),
+      icon: achievementIcon(formData),
+    })
+    .eq("id", id);
   revalidatePath("/");
   revalidatePath("/admin/achievements");
 }
