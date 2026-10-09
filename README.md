@@ -37,6 +37,11 @@ Supabase SQL Editor:
   groups skills into Product & business vs Technical, and updates the typing
   line and contact line for AI PM + technical roles. Safe to run again.
 
+- `supabase/migration-004.sql` (run after 003): hero line "I shape and build",
+  new typing phrases, the new About text (words in [brackets] are highlighted),
+  your full skills list in 8 groups, and award-card titles for achievements.
+  Safe to run again.
+
 Paste the SQL **text** into the SQL Editor, not the file name.
 
 ## Deploying

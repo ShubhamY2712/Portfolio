@@ -40,6 +40,25 @@ const config: Config = {
         "display-lg": ["3rem", { lineHeight: "1.08", letterSpacing: "-0.02em" }],
         "display-xl": ["4rem", { lineHeight: "1.04", letterSpacing: "-0.025em" }],
       },
+      keyframes: {
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-50%)" },
+        },
+        "spin-slow": {
+          to: { transform: "rotate(360deg)" },
+        },
+      },
+      animation: {
+        float: "float 6s ease-in-out infinite",
+        "float-slow": "float 9s ease-in-out infinite",
+        marquee: "marquee 40s linear infinite",
+        "spin-slow": "spin-slow 24s linear infinite",
+      },
       boxShadow: {
         card: "0 1px 0 rgba(255, 255, 255, 0.03) inset",
         "card-hover": "0 0 0 1px rgba(255, 197, 61, 0.25), 0 18px 48px -18px rgba(255, 197, 61, 0.28)",
