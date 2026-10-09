@@ -1,69 +1,46 @@
-# Shubham Yawalkar — Portfolio (with live admin dashboard)
+# Shubham Yawalkar · Portfolio
 
-Built with Next.js, Tailwind CSS, Motion, and Supabase (database + auth + file storage).
+**Live site: [shubhamyawalkar.vercel.app](https://shubhamyawalkar.vercel.app)**
 
-Anyone with the link sees a read-only public site. Only you, logged in at
-`/admin`, can edit content, add/remove items, and upload files — no code
-editing needed after initial setup.
+My personal portfolio as an aspiring AI Product Manager and full stack developer. It covers my projects (InvAI and CreditSaathi), skills, published research and recognition. All content is edited from a private admin dashboard, with no code changes.
 
-## One-time setup
+## Features
 
-1. Create a free project at supabase.com.
-2. In your Supabase project's SQL Editor, run `supabase/schema.sql`, then
-   run `supabase/seed.sql` (in that order) — this creates every table and
-   pre-fills it with your real content.
-3. In Supabase: Authentication -> Users -> Add user. Create the one account
-   you'll use to log in at `/admin`. Nobody else can create an account —
-   there's no public sign-up.
-4. Copy `.env.local.example` to `.env.local` and fill in your Supabase URL
-   and anon key (Settings -> API in your Supabase dashboard).
-5. Run `npm install`, then `npm run dev`. Visit `localhost:3000` for the
-   public site, `localhost:3000/admin` to log in and edit.
+- Dark amber design, responsive from 360px, with a mobile menu
+- Animations that respect the visitor's "reduce motion" setting
+- Case study pages for InvAI and CreditSaathi, with optional Figma, Loom and evaluation-sheet embeds
+- `/admin` dashboard (single editor account) to edit text, projects, skills, achievements, certifications, research details and images
+- Open Graph image and favicons generated automatically
+- Daily Vercel cron (`/api/keep-alive`) so the free Supabase project doesn't pause
 
-## Database migrations
+## Tech stack
 
-After the initial setup, run each migration file once, in order, in the
-Supabase SQL Editor:
+Next.js 14 (App Router) · TypeScript · Tailwind CSS · Motion · Supabase (database, auth, storage) · Vercel
 
-- `supabase/migration-002.sql` adds, without changing anything existing:
-  - the optional Figma / Loom / eval-sheet links and a cover image on `projects`,
-  - the homepage hero text, typing-line phrases and banner on `profile`,
-  - a new `highlights` table for the "What I'm working on" cards, pre-filled once.
-  It's safe to run again (for example if you ran an earlier version of the
-  file). Run it **before** deploying the code that uses it.
+## Run locally
 
-- `supabase/migration-003.sql` (run after 002): removes duplicate skills /
-  achievements / certifications, sets the display name to "Shubham Yawalkar",
-  groups skills into Product & business vs Technical, and updates the typing
-  line and contact line for AI PM + technical roles. Safe to run again.
+```bash
+npm install
+cp .env.local.example .env.local   # then fill in the values below
+npm run dev                        # http://localhost:3000  (admin: /admin)
+```
 
-- `supabase/migration-004.sql` (run after 003): hero line "I shape and build",
-  new typing phrases, the new About text (words in [brackets] are highlighted),
-  your full skills list in 8 groups, and award-card titles for achievements.
-  Safe to run again.
+| Variable | Where to find it |
+|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase → Settings → API |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase → Settings → API |
+| `NEXT_PUBLIC_SITE_URL` | Optional, e.g. `https://shubhamyawalkar.vercel.app` |
 
-- `supabase/migration-005.sql` (run after 004): research paper publication
-  details (DOI, ISBN, series, volume, BISAC), 3 new certifications, 2 new
-  achievements with an "issued by" line, and new ordering. Safe to run again.
+## Database setup
 
-Paste the SQL **text** into the SQL Editor, not the file name.
+In the Supabase SQL Editor, paste and run the contents of these files once, in this order:
 
-## Deploying
+1. `supabase/schema.sql`
+2. `supabase/seed.sql`
+3. `supabase/migration-002.sql` → `003` → `004` → `005`
 
-Push to GitHub, import into Vercel, and add the same two environment
-variables from `.env.local` in Vercel's project settings (Settings ->
-Environment Variables) before deploying. Optionally add
-`NEXT_PUBLIC_SITE_URL` (your live URL) so link previews use absolute URLs;
-on Vercel the production URL is detected automatically if you skip it.
+The migration files only add columns or tables and are safe to run again. Then create the single admin user in **Authentication → Users → Add user**. There is no public sign-up.
 
-The link-preview image (`app/opengraph-image.tsx`) and the favicons
-(`app/icon.svg`, `app/apple-icon.tsx`) are generated automatically from
-your profile, so there's nothing to upload.
+## Deploy
 
-## Editing content going forward
-
-Everything (Summary, the homepage hero and banner, the "What I'm working on"
-cards, Skills, Achievements, Certifications, both Projects with their cover
-images and Figma / Loom / eval-sheet links, your photo, resume, and PRDs) is
-edited at `/admin` on the live site
-itself. You should never need to touch code again for a content change.
+Import the repo into Vercel, add the environment variables above, and deploy. The keep-alive cron is configured in `vercel.json`.
