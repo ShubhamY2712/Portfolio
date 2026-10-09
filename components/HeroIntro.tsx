@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "motion/react";
 import type { Variants } from "motion/react";
 import { ArrowRight, ArrowUpRight, FileDown } from "lucide-react";
 import TypingLine from "@/components/TypingLine";
+import { DotGrid, HeroDoodles } from "@/components/Illustrations";
 import { initials, shortName } from "@/lib/content";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
@@ -57,6 +58,7 @@ export default function HeroIntro({
 
   return (
     <section aria-labelledby="hero-title" className="relative isolate overflow-hidden">
+      <DotGrid />
       {/* Ambient amber glow behind the hero. */}
       <div
         aria-hidden="true"
@@ -85,6 +87,7 @@ export default function HeroIntro({
             show: { opacity: 1, scale: 1, transition: { duration: 0.9, ease: EASE } },
           }}
         >
+          <HeroDoodles />
           <div aria-hidden="true" className="absolute inset-[-30%] -z-10 rounded-full bg-[radial-gradient(closest-side,rgba(255,197,61,0.45),rgba(255,197,61,0.08)_60%,transparent)] blur-2xl" />
           <div className="relative h-44 w-44 overflow-hidden rounded-full border border-accent/40 bg-gradient-to-b from-accent-soft to-surface shadow-glow sm:h-52 sm:w-52 md:h-64 md:w-64 lg:h-80 lg:w-80">
             {photoUrl ? (
@@ -96,7 +99,7 @@ export default function HeroIntro({
                 height={320}
                 loading="eager"
                 decoding="async"
-                className="h-full w-full object-cover object-top"
+                className="h-full w-full object-cover object-center"
               />
             ) : (
               <span

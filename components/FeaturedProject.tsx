@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import { TiltCard } from "@/components/Interactive";
 
 /**
  * Large "Featured project" block: title, description card, then a big
@@ -69,6 +70,7 @@ export default function FeaturedProject({
         </Link>
       </div>
 
+      <TiltCard>
       <Link
         href={href}
         aria-label={`${name} — open case study`}
@@ -111,6 +113,7 @@ export default function FeaturedProject({
           )}
         </div>
       </Link>
+      </TiltCard>
     </article>
   );
 }

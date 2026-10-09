@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Squiggle } from "@/components/Illustrations";
 
 /** Eyebrow + display heading used at the top of each homepage section. */
 export default function SectionHeading({
@@ -25,6 +26,7 @@ export default function SectionHeading({
       <h2 id={id} className="font-display text-display-sm font-bold text-ink sm:text-display-md">
         {title}
       </h2>
+      <Squiggle className={"mt-3 block h-3 w-24 text-accent " + (centered ? "mx-auto" : "")} />
       {children}
     </div>
   );

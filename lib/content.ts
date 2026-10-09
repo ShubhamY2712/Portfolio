@@ -108,11 +108,31 @@ export type Skill = {
   id: string;
   label: string;
   sort_order: number | null;
-  // Added in migration-003.sql: "product" or "technical".
+  // Added in migration-003.sql, regrouped in migration-004.sql (see SKILL_GROUPS).
   category?: string | null;
 };
 
-export const SKILL_CATEGORIES = ["product", "technical"] as const;
+/** Skill groups, in display order. `track` drives the Product / Engineering filter. */
+export const SKILL_GROUPS = [
+  { key: "product", label: "Product & Strategy", track: "product" },
+  { key: "languages", label: "Languages", track: "engineering" },
+  { key: "frontend", label: "Frontend", track: "engineering" },
+  { key: "backend", label: "Backend", track: "engineering" },
+  { key: "database", label: "Database & Auth", track: "engineering" },
+  { key: "ai", label: "AI / ML & Cloud", track: "engineering" },
+  { key: "tools", label: "Deployment & Tools", track: "engineering" },
+  { key: "professional", label: "Professional", track: "people" },
+] as const;
+
+export type SkillGroupKey = (typeof SKILL_GROUPS)[number]["key"];
+export const SKILL_CATEGORIES: readonly string[] = SKILL_GROUPS.map((g: (typeof SKILL_GROUPS)[number]) => g.key);
+
+/** Map any stored category (including the older "technical") to a known group. */
+export function skillGroupOf(category: string | null | undefined): SkillGroupKey {
+  const found = SKILL_GROUPS.find((g: (typeof SKILL_GROUPS)[number]) => g.key === category);
+  if (found) return found.key;
+  return category === "product" ? "product" : "tools";
+}
 
 export type Project = {
   id: string;
@@ -136,7 +156,34 @@ export type Project = {
   sort_order: number | null;
 };
 
-export type Achievement = { id: string; text: string | null; date: string | null; sort_order: number | null };
+export type Achievement = {
+  id: string;
+  text: string | null;
+  date: string | null;
+  sort_order: number | null;
+  // Added in migration-004.sql: short card title, one-line detail and icon.
+  title?: string | null;
+  detail?: string | null;
+  icon?: string | null;
+};
+
+export const ACHIEVEMENT_ICONS = ["trophy", "users", "book", "feather", "award", "star"] as const;
+
+/** Split "text with [highlighted] words" into plain / highlighted parts. */
+export type RichPart = { text: string; highlight: boolean };
+export function parseHighlights(input: string): RichPart[] {
+  const parts: RichPart[] = [];
+  const re: RegExp = /\[([^\]]+)\]/g;
+  let last: number = 0;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(input)) !== null) {
+    if (m.index > last) parts.push({ text: input.slice(last, m.index), highlight: false });
+    parts.push({ text: m[1], highlight: true });
+    last = m.index + m[0].length;
+  }
+  if (last < input.length) parts.push({ text: input.slice(last), highlight: false });
+  return parts;
+}
 
 export type Certification = {
   id: string;

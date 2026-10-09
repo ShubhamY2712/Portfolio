@@ -167,6 +167,7 @@ export default async function CaseStudy({
         linkedin={profile?.linkedin}
         github={profile?.github}
         resumeUrl={profile?.resume_url}
+        location={profile?.location}
         contactLine={profile?.statement || undefined}
       />
     </>
