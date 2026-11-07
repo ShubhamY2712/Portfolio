@@ -1,0 +1,366 @@
+/* "Let's connect" band. Geometry and colours measured on the reference
+   (7 Nov 2026): 72px gap above, 46px torn edge, 1320px container with
+   36/64px padding, columns  text | scene lane clamp(240px, 24vw, 400px) | 304px,
+   48px headline, a hairline above the copyright row, and a scene strip whose
+   layers scale with  --tile: max(100vw, 900px). */
+
+.band {
+  --tile: max(100vw, 900px);
+  --lane: clamp(240px, 24vw, 400px);
+  --balloon-w: clamp(84px, 11vw, 170px);
+  --balloon-bottom: calc(var(--tile) * .046);
+  margin-top: 72px;
+  color: var(--band-ink);
+}
+
+.band .torn {
+  height: 46px;
+}
+
+.body {
+  position: relative;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(-45deg, var(--band-hatch) 0 1.5px, transparent 1.5px 13px),
+    var(--band-bg);
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "intro"
+    "contact"
+    "copy"
+    "hand";
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 16px 24px 0;
+}
+
+.intro { grid-area: intro; }
+.contact { grid-area: contact; display: grid; align-content: start; gap: 12px; margin-top: 10px; }
+.copy { grid-area: copy; }
+.hand { grid-area: hand; }
+
+.eyebrow {
+  margin: 0;
+  font: 600 14px/1.6 var(--f-body);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  opacity: .8;
+}
+
+.h {
+  margin: 6px 0 0;
+  font: 500 clamp(30px, 2.4vw + 14px, 48px)/1.02 var(--f-display);
+  font-variation-settings: "SOFT" 30, "opsz" 144;
+  letter-spacing: -.015em;
+}
+
+/* The six verbs share one grid cell, so the slot is as wide as the longest
+   word; each takes its 2.5s turn in a 15s loop. */
+.verbs {
+  display: inline-grid;
+  vertical-align: bottom;
+  overflow: hidden;
+  padding: .14em .12em .2em 0;
+  margin: -.14em -.12em -.2em 0;
+}
+
+.verbs em {
+  grid-area: 1 / 1;
+  font-style: italic;
+  font-variation-settings: "SOFT" 60, "opsz" 144;
+  color: var(--band-accent);
+  opacity: 0;
+  animation: verb 15s calc(var(--i) * 2.5s - .28s) infinite both;
+}
+
+@keyframes verb {
+  0% { opacity: 0; transform: translateY(100%); animation-timing-function: cubic-bezier(.2, .7, .2, 1); }
+  1.867%, 14.133% { opacity: 1; transform: translateY(0); animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
+  16%, 100% { opacity: 0; transform: translateY(-100%); }
+}
+
+/* Reduced motion: one still verb ("build"). */
+@media (prefers-reduced-motion: reduce) {
+  .verbs em {
+    animation: none;
+    opacity: 0;
+  }
+
+  .verbs em:nth-child(4) {
+    opacity: 1;
+  }
+}
+
+.rest {
+  color: var(--band-dim);
+}
+
+.sub {
+  max-width: 34em;
+  margin: 10px 0 0;
+  font: 400 15px/1.6 var(--f-body);
+  opacity: .8;
+}
+
+.label {
+  display: block;
+  margin-bottom: 2px;
+  font: 400 14px/1.6 var(--f-body);
+  opacity: .8;
+}
+
+.email {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font: 400 clamp(17px, 1.39vw, 20px)/1.6 var(--f-body);
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  overflow-wrap: anywhere;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .email:hover {
+    text-decoration-color: var(--band-accent);
+  }
+}
+
+.social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.social a {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--band-chip);
+  color: var(--band-chip-ink);
+  transition: translate .2s var(--ease-paper);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .social a:hover {
+    translate: 0 -2px;
+  }
+}
+
+.band a:focus-visible {
+  outline-color: var(--band-ink);
+}
+
+.copy,
+.hand {
+  margin: 18px 0 0;
+}
+
+.copy {
+  font: 400 14px/1.6 var(--f-body);
+  letter-spacing: .08em;
+  opacity: .8;
+}
+
+.hand {
+  padding-top: 4px;
+  font: 400 17px/1.6 var(--f-hand);
+  color: var(--band-accent);
+}
+
+/* ---------- scene strip ----------
+   Below 1024px it sits under the text; from 1024px it runs behind the bottom
+   of the band and the balloon floats in the middle lane. */
+.scene {
+  position: relative;
+  height: max(calc(var(--tile) * .125 + 24px), calc(var(--balloon-bottom) + var(--balloon-w) * 767 / 640 + 4px + clamp(16px, 2.5vw, 40px)));
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* each layer: two copies of one tile, the track slides one tile per loop */
+.track {
+  position: absolute;
+  left: 0;
+  display: flex;
+  width: calc(var(--tile) * 2);
+  animation: drift linear infinite;
+  will-change: transform;
+}
+
+/* width/height only: display stays unset so the global day/night (.d/.n) swap works */
+.track img {
+  flex: none;
+  width: 50%;
+  height: 100%;
+  max-width: none;
+}
+
+/* every strip runs from the band bottom up to the reference's crest line;
+   the art's own hill shapes create the depth between layers */
+.back {
+  bottom: 0;
+  height: calc(var(--tile) * .0853);
+  opacity: .9;
+  animation-duration: 140s;
+}
+
+.mid {
+  bottom: 0;
+  height: calc(var(--tile) * .0831);
+  animation-duration: 90s;
+}
+
+.front {
+  bottom: 0;
+  height: calc(var(--tile) * .0867);
+  animation-duration: 55s;
+}
+
+@keyframes drift {
+  to { transform: translateX(-50%); }
+}
+
+/* balloon: drifts across the lane and back, swaying gently */
+.balloonWrap {
+  --from: -18vw;
+  --to: 14vw;
+  position: absolute;
+  left: 62%;
+  bottom: var(--balloon-bottom);
+  width: var(--balloon-w);
+  aspect-ratio: 640 / 767;
+  animation: sail 70s ease-in-out infinite alternate;
+}
+
+.balloonWrap::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 18%;
+  bottom: -1%;
+  width: 70%;
+  height: 5%;
+  border-radius: 50%;
+  background: rgb(13 23 53 / .3);
+  translate: 6% 40%;
+}
+
+.balloon {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 92%;
+  animation: sway 6s ease-in-out infinite;
+}
+
+.balloon img {
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes sail {
+  from { transform: translate3d(var(--from), 0, 0); }
+  to { transform: translate3d(var(--to), 0, 0); }
+}
+
+@keyframes sway {
+  0%, 100% { transform: translateY(0) rotate(-2.2deg); }
+  50% { transform: translateY(-4px) rotate(2.2deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track,
+  .balloonWrap,
+  .balloon {
+    animation: none;
+    will-change: auto;
+  }
+}
+
+/* ---------- tablet ---------- */
+@media (min-width: 640px) {
+  .inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "intro intro"
+      "contact contact"
+      "copy hand";
+    padding: 28px 40px 0;
+  }
+
+  .sub { font-size: 16px; }
+
+  .contact {
+    margin-top: 24px;
+    grid-template-columns: auto auto;
+    justify-content: start;
+    column-gap: 48px;
+  }
+
+  .hand { text-align: right; }
+}
+
+/* ---------- desktop: 3 columns, scene behind the bottom of the band ---------- */
+@media (min-width: 1024px) {
+  .body {
+    padding-bottom: calc(8px + var(--tile) * .0853);
+  }
+
+  .inner {
+    grid-template-columns: minmax(0, 1fr) var(--lane) 19rem;
+    grid-template-areas:
+      "intro . contact"
+      "copy . hand";
+    padding: 36px 64px 0;
+  }
+
+  .contact {
+    margin-top: 0;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  /* hairline above the copyright row */
+  .copy,
+  .hand {
+    margin-top: 22px;
+    padding-top: 12px;
+    border-top: 1px solid color-mix(in oklab, var(--band-ink) 28%, transparent);
+  }
+
+  .scene {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  /* the balloon stays inside the middle lane of the grid */
+  .balloonWrap {
+    --from: 0px;
+    --to: calc(var(--lane) - 32px - var(--balloon-w));
+    left: calc(50% + min(50%, 660px) - 64px - 19rem - var(--lane) + 16px);
+    animation-duration: 50s;
+  }
+}
+
+/* ---------- phone: keep the last line clear of the fixed dock ---------- */
+@media (max-width: 639px) {
+  .band {
+    padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+    background: var(--band-bg);
+  }
+}

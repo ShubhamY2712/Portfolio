@@ -1,0 +1,347 @@
+/* Paper-world header, ported from the approved style frame (v14).
+   Sizes and breakpoints were measured on the reference site (handoff §6):
+   one row from 1280px (compact 1280–1439, mid 1440–1599), two rows below
+   1280px, and the mobile pattern below 640px. */
+
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 2vw, 28px);
+  padding-block: calc(16px + env(safe-area-inset-top, 0px)) 34px;
+  /* content sits in a centred 1508px band */
+  padding-left: max(16px, env(safe-area-inset-left, 0px), 32px, 2.45vw, calc((100% - 1508px) / 2));
+  padding-right: max(16px, env(safe-area-inset-right, 0px), 32px, 2.45vw, calc((100% - 1508px) / 2));
+  background: var(--grain), var(--hdr-bg);
+  color: var(--hdr-ink);
+  overflow-x: clip;
+}
+
+/* painted ridge band repeating along the bottom */
+.ridge {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 48px;
+  pointer-events: none;
+  background: var(--ridge-img) repeat-x left bottom / auto 100%;
+}
+
+/* cream torn-paper edge under the header */
+.top::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 9px;
+  background: rgb(var(--c-paper));
+  pointer-events: none;
+  filter: drop-shadow(0 2px 2px rgb(13 23 53 / .18));
+  clip-path: polygon(0 35%, 4% 10%, 9% 40%, 14% 15%, 20% 45%, 26% 12%, 31% 38%, 37% 8%, 43% 42%, 49% 14%, 55% 40%, 61% 10%, 67% 44%, 73% 16%, 79% 38%, 85% 9%, 91% 41%, 96% 14%, 100% 34%, 100% 100%, 0 100%);
+}
+
+.corner {
+  position: absolute;
+  bottom: 4px;
+  height: clamp(60px, 4.8vw, 92px);
+  width: auto;
+  max-width: none;
+  pointer-events: none;
+  user-select: none;
+}
+
+.cornerL { left: 0; }
+.cornerR { right: 0; }
+
+/* ---------- brand ---------- */
+.brand {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  color: var(--hdr-ink);
+  border-radius: 6px;
+}
+
+.markWrap {
+  filter: drop-shadow(1px 2px 1.5px rgb(13 23 53 / .28)) drop-shadow(3px 6px 5px rgb(13 23 53 / .2));
+}
+
+/* 74px painted paper tile, monogram fills 66% */
+.mark {
+  width: 74px;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  background: var(--tile-img) center / 100% 100% no-repeat;
+  color: var(--mark-ink);
+}
+
+.mark svg {
+  width: 66%;
+  height: auto;
+  overflow: visible;
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.brandText b {
+  font: 600 15px/1.1 var(--f-body);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.brandText span {
+  font-family: var(--f-hand);
+  font-size: 21px;
+  color: rgb(var(--c-ink-2));
+  white-space: nowrap;
+}
+
+/* ---------- paper tabs ---------- */
+.nav {
+  margin: 0 auto;
+}
+
+.tabs {
+  position: relative;
+  display: flex;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* hand-cut parallelograms with a folded corner under the right edge */
+.tabs li {
+  position: relative;
+  filter: drop-shadow(1px 2px 0 rgb(var(--c-mat-side)));
+  transition: translate .2s var(--ease-paper);
+}
+
+.tabs li::after {
+  content: "";
+  position: absolute;
+  right: 6px;
+  bottom: -9px;
+  width: 15px;
+  height: 10px;
+  background: var(--notch);
+  clip-path: polygon(0 0, 100% 0, 35% 100%);
+}
+
+.tabs li:has(a[aria-current])::after {
+  background: var(--tab-on-bg);
+}
+
+.tabs a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 56px;
+  padding: 0 clamp(16px, 1vw, 19px);
+  text-decoration: none;
+  color: var(--tab-ink);
+  font: 500 18px/1 var(--f-display);
+  background: var(--grain), var(--tab-bg);
+  clip-path: polygon(8% 3%, 30% 0, 62% 2%, 100% 0, 92% 100%, 55% 98%, 20% 100%, 0 97%);
+}
+
+.tabs a::after {
+  content: "";
+  position: absolute;
+  left: 24%;
+  right: 24%;
+  bottom: 9px;
+  height: 2.5px;
+  background: rgb(var(--c-rust));
+  scale: 0 1;
+  transition: scale .25s var(--ease-paper);
+}
+
+.tabs a[aria-current] {
+  background: var(--tab-on-bg);
+  color: var(--tab-on-ink);
+}
+
+.tabs a[aria-current]::after {
+  scale: 1 1;
+}
+
+.tabs a:focus-visible {
+  outline-offset: -3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tabs li:hover {
+    translate: 0 -3px;
+  }
+
+  .tabs a:hover::after {
+    scale: 1 1;
+  }
+}
+
+/* ---------- tools ---------- */
+.tools {
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 12px;
+}
+
+.connect {
+  display: inline-flex;
+  align-items: center;
+  gap: .3em;
+  box-sizing: border-box;
+  height: 56px;
+  padding: 6px clamp(18px, 1.56vw, 30px) 8px;
+  font: 600 27px/1 var(--f-hand);
+  color: var(--pill-ink);
+  background: var(--grain), var(--pill-bg);
+  text-decoration: none;
+  white-space: nowrap;
+  clip-path: polygon(1% 4%, 50% 0, 99% 3%, 100% 52%, 98.5% 97%, 48% 100%, 0 96%, 1.2% 48%);
+  filter: drop-shadow(2px 3px 0 rgb(var(--c-mat-side)));
+}
+
+.arr {
+  display: inline-block;
+  transition: translate .2s var(--ease-paper);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .connect:hover .arr {
+    translate: 3px 0;
+  }
+}
+
+.iconBtn {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--hdr-ink);
+  cursor: pointer;
+}
+
+.iconBtn[aria-disabled="true"] {
+  cursor: default;
+}
+
+.iconBtn svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* ⋮ More: phones only */
+.more {
+  display: none;
+}
+
+/* ---------- breakpoints (reference tiers) ---------- */
+@media (min-width: 1440px) and (max-width: 1599px) {
+  .top { column-gap: 16px; }
+  .tabs { gap: 20px; }
+  .tabs a { font-size: 17px; padding: 0 16px; }
+  .tools { gap: 10px; }
+}
+
+@media (min-width: 1280px) and (max-width: 1439px) {
+  .top { column-gap: 16px; padding-block: calc(22px + env(safe-area-inset-top, 0px)) 40px; }
+  .mark { width: 62px; }
+  .brand { gap: 10px; }
+  .brandText b { font-size: 14px; }
+  .brandText span { font-size: 19px; }
+  .tabs a { font-size: 16px; padding: 0 14px; }
+  .tools { gap: 8px; }
+  .connect { height: 50px; font-size: 23px; }
+}
+
+/* below 1280: two rows (brand + tools, then centred tabs) */
+@media (max-width: 1279px) {
+  /* a grid, not flex-wrap: the tools can never drop to their own row while fonts load */
+  .top { display: grid; grid-template-columns: auto 1fr auto; row-gap: 8px; padding-block: calc(8px + env(safe-area-inset-top, 0px)) 19px; }
+  .brand { grid-area: 1 / 1; }
+  .tools { grid-area: 1 / 3; }
+  .nav { grid-area: 2 / 1 / 3 / -1; margin: 0; }
+  .tabs { justify-content: center; }
+  .tabs a { height: 50px; font-size: 17px; padding: 0 22px; }
+  .connect { height: 48px; font-size: 24px; padding: 6px 26px 8px; }
+  .tools { gap: 10px; }
+  .mark { width: 52px; }
+  .brandText b { font-size: 13px; }
+  .brandText span { font-size: 17px; }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .top { padding-left: max(40px, env(safe-area-inset-left, 0px)); padding-right: max(40px, env(safe-area-inset-right, 0px)); }
+}
+
+/* below 640: reference mobile pattern. ⋮ left, centred brand, switch right. */
+@media (max-width: 639px) {
+  .top {
+    display: grid;
+    grid-template-columns: 56px 1fr 56px;
+    gap: 0;
+    padding: calc(8px + env(safe-area-inset-top, 0px)) max(12px, env(safe-area-inset-right, 0px)) 16px max(12px, env(safe-area-inset-left, 0px));
+  }
+
+  .more {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: .8px solid rgb(13 23 53 / .12);
+    border-radius: 12px;
+    background: rgb(var(--c-ivory));
+    color: var(--hdr-ink);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / .55), 1px 2px 3px rgb(13 23 53 / .22), 3px 6px 8px -2px rgb(13 23 53 / .16);
+    cursor: pointer;
+  }
+
+  .more { grid-area: 1 / 1; }
+
+  .brand {
+    grid-area: 1 / 2;
+    justify-self: center;
+    gap: 8px;
+  }
+
+  .mark { width: 36px; }
+
+  .brandText b {
+    font-size: 12px;
+    letter-spacing: .04em;
+  }
+
+  /* the reference shows only the name on phones */
+  .brandText span { display: none; }
+
+  .nav,
+  .connect,
+  .iconBtn {
+    display: none;
+  }
+
+  .tools {
+    justify-self: end;
+  }
+}

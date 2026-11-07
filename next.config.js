@@ -8,6 +8,13 @@ const nextConfig = {
       bodySizeLimit: "10mb",
     },
   },
+  // v0 case-study URLs moved under /work in v1.0.
+  async redirects() {
+    return [
+      { source: "/invai", destination: "/work/invai", statusCode: 301 },
+      { source: "/creditsaathi", destination: "/work/creditsaathi", statusCode: 301 },
+    ];
+  },
 };
 
 module.exports = nextConfig;

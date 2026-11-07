@@ -201,7 +201,7 @@ export function DotGrid({ className = "" }: { className?: string }) {
       aria-hidden="true"
       className={"pointer-events-none absolute inset-0 -z-10 " + className}
       style={{
-        backgroundImage: "radial-gradient(rgba(255,197,61,0.22) 1px, transparent 1px)",
+        backgroundImage: "radial-gradient(rgb(var(--c-rust)/0.22) 1px, transparent 1px)",
         backgroundSize: "26px 26px",
         maskImage: "radial-gradient(60% 60% at 50% 40%, black, transparent)",
         WebkitMaskImage: "radial-gradient(60% 60% at 50% 40%, black, transparent)",

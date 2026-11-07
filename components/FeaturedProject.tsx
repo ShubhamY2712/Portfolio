@@ -29,7 +29,7 @@ export default function FeaturedProject({
   reverse?: boolean;
 }) {
   const inProgress: boolean = /present/i.test(dates || "");
-  const href: string = `/${slug}`;
+  const href: string = `/work/${slug}`;
 
   return (
     <article aria-labelledby={`feat-${slug}`} className={"grid gap-8 " + (reverse ? "lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]" : "lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]") + " lg:items-center lg:gap-12"}>
@@ -74,7 +74,7 @@ export default function FeaturedProject({
       <Link
         href={href}
         aria-label={`${name} — open case study`}
-        className="group relative block overflow-hidden rounded-2xl border border-line bg-surface shadow-[0_0_60px_-20px_rgba(255,197,61,0.35)] transition duration-500 hover:border-accent/40"
+        className="group relative block overflow-hidden rounded-2xl border border-line bg-surface shadow-[0_0_60px_-20px_rgb(var(--c-rust)/0.35)] transition duration-500 hover:border-accent/40"
       >
         <div className="aspect-[16/10] w-full">
           {coverUrl ? (
@@ -93,7 +93,7 @@ export default function FeaturedProject({
               className="relative flex h-full w-full flex-col justify-end overflow-hidden p-6 sm:p-10"
               style={{
                 background:
-                  "radial-gradient(80% 90% at 85% 10%, rgba(255,197,61,0.28), rgba(255,197,61,0) 60%), linear-gradient(135deg, #1A150C 0%, #0D0B07 100%)",
+                  "radial-gradient(80% 90% at 85% 10%, rgb(var(--c-rust)/0.28), rgb(var(--c-rust)/0) 60%), linear-gradient(135deg, rgb(var(--c-paper-2)) 0%, rgb(var(--c-paper)) 100%)",
               }}
             >
               <div

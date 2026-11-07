@@ -1,83 +1,78 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
-import { Poppins, IBM_Plex_Sans } from "next/font/google";
+import { Caveat, Fraunces, Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
-import { createClient } from "@/lib/supabase/server";
 import MotionProvider from "@/components/MotionProvider";
+import ThemeScript from "@/components/shell/ThemeScript";
+import { SITE_NAME, siteUrl } from "@/lib/site";
 
-const poppins = Poppins({
+const fraunces = Fraunces({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-poppins",
+  style: ["normal", "italic"],
+  axes: ["SOFT", "opsz"],
+  variable: "--font-fraunces",
   display: "swap",
 });
 
-const plexSans = IBM_Plex_Sans({
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-plex",
+  variable: "--font-inter",
   display: "swap",
 });
 
-/** Absolute base URL so Open Graph / icon URLs resolve correctly. */
-function siteUrl(): URL {
-  const explicit: string | undefined = process.env.NEXT_PUBLIC_SITE_URL;
-  const vercelProd: string | undefined = process.env.VERCEL_PROJECT_PRODUCTION_URL;
-  const vercel: string | undefined = process.env.VERCEL_URL;
-  const raw: string = explicit
-    ? explicit
-    : vercelProd
-      ? "https://" + vercelProd
-      : vercel
-        ? "https://" + vercel
-        : "http://localhost:3000";
-  try {
-    return new URL(raw);
-  } catch {
-    return new URL("http://localhost:3000");
-  }
-}
+const caveat = Caveat({
+  subsets: ["latin"],
+  variable: "--font-caveat",
+  display: "swap",
+});
 
-export async function generateMetadata(): Promise<Metadata> {
-  const supabase = createClient();
-  const { data: profile } = await supabase.from("profile").select("name, tagline").eq("id", 1).single();
+const TITLE: string = SITE_NAME + " | AI Product Manager & Full Stack Developer";
+const DESCRIPTION: string = "AI Product Manager and Full Stack Developer. I shape and build AI products people can trust.";
 
-  const name: string = profile?.name || "Portfolio";
-  const tagline: string = profile?.tagline || "";
-  const title: string = name + " | AI Product Manager & AI/ML Builder";
-
-  return {
-    metadataBase: siteUrl(),
-    title: {
-      default: title,
-      template: "%s | " + name,
-    },
-    description: tagline,
-    openGraph: {
-      title,
-      description: tagline,
-      type: "website",
-      siteName: name,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description: tagline,
-    },
-  };
-}
+export const metadata: Metadata = {
+  metadataBase: siteUrl(),
+  title: {
+    default: TITLE,
+    template: "%s · " + SITE_NAME,
+  },
+  description: DESCRIPTION,
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    type: "website",
+    siteName: SITE_NAME,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+  },
+};
 
 export const viewport: Viewport = {
-  themeColor: "#0D0B07",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#EFE6D2" },
+    { media: "(prefers-color-scheme: dark)", color: "#0E1427" },
+  ],
   width: "device-width",
   initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={poppins.variable + " " + plexSans.variable}>
+    <html
+      lang="en"
+      className={fraunces.variable + " " + inter.variable + " " + caveat.variable}
+      suppressHydrationWarning
+    >
+      <head>
+        <ThemeScript />
+      </head>
       <body className="font-body min-h-screen">
         <MotionProvider>{children}</MotionProvider>
+        <Analytics />
       </body>
     </html>
   );

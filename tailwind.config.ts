@@ -1,11 +1,13 @@
 import type { Config } from "tailwindcss";
 
-// Dark "Amber Yellow" theme. Token NAMES are unchanged from the original
-// light theme, so every component picks up the new palette automatically:
-//   paper   = page background      surface = card background
-//   ink     = main text            ink-soft = secondary text
-//   primary = amber (buttons)      accent  = amber (highlights, eyebrows)
-//   *-soft  = dark amber tints     line    = hairline borders
+// Paper-world theme (v1.0). Every colour is a CSS variable holding "R G B"
+// channels (see app/globals.css), so light/dark swap at runtime and opacity
+// modifiers like `border-accent/40` keep working.
+// The v0 token NAMES are kept as aliases so existing components still compile:
+//   surface = ivory   line = paper edge   primary/accent = rust
+//   *-soft = sticky-note tint   accent-deep / accent-light = terracotta
+const token = (name: string): string => `rgb(var(--c-${name}) / <alpha-value>)`;
+
 const config: Config = {
   content: [
     "./app/**/*.{ts,tsx}",
@@ -14,21 +16,33 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        paper: "#0D0B07",
-        surface: "#15120B",
-        ink: "#F7F4EE",
-        "ink-soft": "#ABA396",
-        primary: "#FFC53D",
-        "primary-soft": "#2A2110",
-        accent: "#FFC53D",
-        "accent-soft": "#3D2C05",
-        "accent-deep": "#B7791F",
-        "accent-light": "#FDE68A",
-        line: "#2B251A",
+        paper: token("paper"),
+        ivory: token("ivory"),
+        "paper-2": token("paper-2"),
+        ink: token("ink"),
+        "ink-2": token("ink-2"),
+        "ink-soft": token("ink-soft"),
+        rust: token("rust"),
+        terracotta: token("terracotta"),
+        kraft: token("kraft"),
+        note: token("note"),
+        forest: token("forest"),
+        steel: token("steel"),
+        "mat-side": token("mat-side"),
+        // v0 aliases
+        surface: token("ivory"),
+        line: token("line"),
+        primary: token("rust"),
+        "primary-soft": token("note"),
+        accent: token("rust"),
+        "accent-soft": token("note"),
+        "accent-deep": token("terracotta"),
+        "accent-light": token("terracotta"),
       },
       fontFamily: {
-        display: ["var(--font-poppins)", "sans-serif"],
-        body: ["var(--font-plex)", "sans-serif"],
+        display: ["var(--font-fraunces)", "Georgia", "serif"],
+        body: ["var(--font-inter)", "system-ui", "sans-serif"],
+        hand: ["var(--font-caveat)", "cursive"],
       },
       maxWidth: {
         content: "1100px",
@@ -39,6 +53,9 @@ const config: Config = {
         "display-md": ["2.25rem", { lineHeight: "1.12", letterSpacing: "-0.015em" }],
         "display-lg": ["3rem", { lineHeight: "1.08", letterSpacing: "-0.02em" }],
         "display-xl": ["4rem", { lineHeight: "1.04", letterSpacing: "-0.025em" }],
+      },
+      transitionTimingFunction: {
+        paper: "cubic-bezier(.22, 1, .36, 1)",
       },
       keyframes: {
         float: {
@@ -60,9 +77,9 @@ const config: Config = {
         "spin-slow": "spin-slow 24s linear infinite",
       },
       boxShadow: {
-        card: "0 1px 0 rgba(255, 255, 255, 0.03) inset",
-        "card-hover": "0 0 0 1px rgba(255, 197, 61, 0.25), 0 18px 48px -18px rgba(255, 197, 61, 0.28)",
-        glow: "0 0 80px 10px rgba(255, 197, 61, 0.22)",
+        card: "2px 2px 0 rgb(var(--c-mat-side) / .35)",
+        "card-hover": "0 0 0 1px rgb(var(--c-rust) / .25), 0 18px 48px -18px rgb(var(--c-rust) / .28)",
+        glow: "0 0 80px 10px rgb(var(--c-rust) / .18)",
       },
     },
   },

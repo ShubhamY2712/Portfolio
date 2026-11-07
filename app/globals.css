@@ -2,17 +2,237 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ---------- design tokens (style frame v14, handoff §5) ----------
+   Colours are "R G B" channels: use rgb(var(--c-ink)) or rgb(var(--c-ink) / .5).
+   Bare :root = light (day). Dark (night) follows the device unless the visitor
+   picked a theme, which the no-flash script stores as <html data-theme>. */
+:root {
+  --c-paper: 247 241 231;
+  --c-ivory: 251 247 239;
+  --c-paper-2: 239 231 216;
+  --c-ink: 13 23 53;
+  --c-ink-2: 46 56 84;
+  --c-ink-soft: 90 97 120;
+  --c-rust: 182 73 39;
+  --c-terracotta: 146 56 31;
+  --c-kraft: 215 190 147;
+  --c-note: 238 220 169;
+  --c-forest: 33 79 67;
+  --c-steel: 99 121 158;
+  --c-mat-side: 107 91 60;
+  --c-line: 216 205 184;
+  --cta-bg: #B64927;
+  --cta-ink: #FBF7EF;
+  --cta-glow: 182 73 39;
+  --ghost-bg: #FBF7EF;
+  --ghost-ink: #0D1735;
+  --ghost-line: #D8CDB8;
+  --ghost-side: #5E3424;
+  --hdr-bg: #EFE6D2;
+  --hdr-ink: #0D1735;
+  --tab-bg: #FBF7EF;
+  --tab-ink: #0D1735;
+  --tab-on-bg: #0D1735;
+  --tab-on-ink: #F7F1E7;
+  --notch: #D7BE93;
+  --pill-bg: #0D1735;
+  --pill-ink: #F7F1E7;
+  --mark-ink: #0D1735;
+  --frame: #FBF7EF;
+  --frame-line: #E2D8C6;
+  --tape: rgb(215 190 147 / .75);
+  --sw-rim: #FBF7EF;
+  --decor: rgb(13 23 53 / .1);
+  --shadow: 13 23 53;
+  --ridge-img: url(/art/header/header-ridge-day.webp);
+  --tile-img: url(/art/header/logo-tile-day.webp);
+  --band-bg: #92381F;
+  --band-ink: #FBF7EF;
+  --band-accent: #EEDCA9;
+  --band-dim: #D7BE93;
+  --band-hatch: rgb(251 248 239 / .055);
+  --band-chip: #FBF7EF;
+  --band-chip-ink: #92381F;
+  --band-torn-back: #F3EADB;
+  --band-torn-mid: #E5D5B8;
+  --band-torn-shade: #0D1735;
+  --dock-bg: rgb(255 250 241 / .5);
+  --dock-line: rgb(255 255 255 / .76);
+  --dock-ink: #3B4560;
+  --dock-on-ink: #172342;
+  --dock-tile: #172342;
+  --dock-tile-2: #23335C;
+  --dock-gold: #C58A2C;
+  --sheet-bg: #F3ECDF;
+  --row-bg: rgb(251 247 239 / .56);
+  --row-line: rgb(13 23 53 / .11);
+  --scrim: rgb(13 23 53 / .46);
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.28 0 0 0 0 0.18 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  --f-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --f-body: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-hand: var(--font-caveat), "Segoe Print", "Bradley Hand", cursive;
+  --ease-paper: cubic-bezier(.22, 1, .36, 1);
+  --ease-sheet: cubic-bezier(.32, .72, 0, 1);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --c-paper: 11 21 48;
+    --c-ivory: 23 38 70;
+    --c-paper-2: 16 28 56;
+    --c-ink: 244 238 223;
+    --c-ink-2: 199 205 217;
+    --c-ink-soft: 163 173 191;
+    --c-rust: 220 118 80;
+    --c-terracotta: 232 148 111;
+    --c-kraft: 107 91 60;
+    --c-note: 75 64 35;
+    --c-forest: 140 203 176;
+    --c-steel: 126 148 184;
+    --c-mat-side: 5 9 26;
+    --c-line: 42 58 94;
+    --cta-bg: #DC7650;
+    --cta-ink: #0B1530;
+    --cta-glow: 220 118 80;
+    --ghost-bg: #172646;
+    --ghost-ink: #F4EEDF;
+    --ghost-line: #2A3A5E;
+    --ghost-side: #05091A;
+    --hdr-bg: #0E1427;
+    --hdr-ink: #F4EEDF;
+    --tab-bg: #364461;
+    --tab-ink: #F4EEDF;
+    --tab-on-bg: #EDE8DB;
+    --tab-on-ink: #0B1530;
+    --notch: #2A3A5E;
+    --pill-bg: #F4EEDF;
+    --pill-ink: #0B1530;
+    --mark-ink: #F4EEDF;
+    --frame: #172646;
+    --frame-line: #22335A;
+    --tape: rgb(107 91 60 / .8);
+    --sw-rim: #2A3A5E;
+    --decor: rgb(244 238 223 / .08);
+    --shadow: 0 0 0;
+    --ridge-img: url(/art/header/header-ridge-night.webp);
+    --tile-img: url(/art/header/logo-tile-night.webp);
+    --band-bg: #E8946F;
+    --band-ink: #172646;
+    --band-accent: #0B1530;
+    --band-dim: #4B4023;
+    --band-hatch: rgb(23 38 70 / .055);
+    --band-chip: #172646;
+    --band-chip-ink: #E8946F;
+    --band-torn-back: #3B3F45;
+    --band-torn-mid: #564D3C;
+    --band-torn-shade: #0B1530;
+    --dock-bg: rgb(13 24 46 / .52);
+    --dock-line: rgb(222 231 248 / .22);
+    --dock-ink: #C3CDE2;
+    --dock-on-ink: #F4EEDF;
+    --dock-tile: #EDE8DB;
+    --dock-tile-2: #F7F1E7;
+    --dock-gold: #C58A2C;
+    --sheet-bg: #101C38;
+    --row-bg: rgb(23 38 70 / .62);
+    --row-line: rgb(244 238 223 / .1);
+    --scrim: rgb(2 6 18 / .6);
+    color-scheme: dark;
+  }
+  :root:not([data-theme="light"]) .d { display: none; }
+  :root:not([data-theme="light"]) .n { display: block; }
+}
+:root[data-theme="dark"] {
+  --c-paper: 11 21 48;
+  --c-ivory: 23 38 70;
+  --c-paper-2: 16 28 56;
+  --c-ink: 244 238 223;
+  --c-ink-2: 199 205 217;
+  --c-ink-soft: 163 173 191;
+  --c-rust: 220 118 80;
+  --c-terracotta: 232 148 111;
+  --c-kraft: 107 91 60;
+  --c-note: 75 64 35;
+  --c-forest: 140 203 176;
+  --c-steel: 126 148 184;
+  --c-mat-side: 5 9 26;
+  --c-line: 42 58 94;
+  --cta-bg: #DC7650;
+  --cta-ink: #0B1530;
+  --cta-glow: 220 118 80;
+  --ghost-bg: #172646;
+  --ghost-ink: #F4EEDF;
+  --ghost-line: #2A3A5E;
+  --ghost-side: #05091A;
+  --hdr-bg: #0E1427;
+  --hdr-ink: #F4EEDF;
+  --tab-bg: #364461;
+  --tab-ink: #F4EEDF;
+  --tab-on-bg: #EDE8DB;
+  --tab-on-ink: #0B1530;
+  --notch: #2A3A5E;
+  --pill-bg: #F4EEDF;
+  --pill-ink: #0B1530;
+  --mark-ink: #F4EEDF;
+  --frame: #172646;
+  --frame-line: #22335A;
+  --tape: rgb(107 91 60 / .8);
+  --sw-rim: #2A3A5E;
+  --decor: rgb(244 238 223 / .08);
+  --shadow: 0 0 0;
+  --ridge-img: url(/art/header/header-ridge-night.webp);
+  --tile-img: url(/art/header/logo-tile-night.webp);
+  --band-bg: #E8946F;
+  --band-ink: #172646;
+  --band-accent: #0B1530;
+  --band-dim: #4B4023;
+  --band-hatch: rgb(23 38 70 / .055);
+  --band-chip: #172646;
+  --band-chip-ink: #E8946F;
+  --band-torn-back: #3B3F45;
+  --band-torn-mid: #564D3C;
+  --band-torn-shade: #0B1530;
+  --dock-bg: rgb(13 24 46 / .52);
+  --dock-line: rgb(222 231 248 / .22);
+  --dock-ink: #C3CDE2;
+  --dock-on-ink: #F4EEDF;
+  --dock-tile: #EDE8DB;
+  --dock-tile-2: #F7F1E7;
+  --dock-gold: #C58A2C;
+  --sheet-bg: #101C38;
+  --row-bg: rgb(23 38 70 / .62);
+  --row-line: rgb(244 238 223 / .1);
+  --scrim: rgb(2 6 18 / .6);
+  color-scheme: dark;
+}
+:root[data-theme="dark"] .d { display: none; }
+:root[data-theme="dark"] .n { display: block; }
+.n { display: none; }
+
 @layer base {
   html {
-    scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
-    color-scheme: dark;
-    background-color: #0D0B07;
+    background-color: rgb(var(--c-paper));
+    /* keyboard focus and anchors never land under the sticky header */
+    scroll-padding-top: 140px;
+  }
+
+  @media (max-width: 639px) {
+    html {
+      scroll-padding-top: 84px;
+      scroll-padding-bottom: 88px; /* fixed dock */
+    }
+  }
+
+  a,
+  button {
+    touch-action: manipulation;
   }
 
   body {
-    background-color: #0D0B07;
-    color: #F7F4EE;
+    background: var(--grain), rgb(var(--c-paper));
+    color: rgb(var(--c-ink));
+    font-family: var(--f-body);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
@@ -28,20 +248,26 @@
     text-wrap: pretty;
   }
 
-  /* Anchor targets land below the sticky navbar. */
+  /* Anchor targets land below the sticky header (124px desktop, ~70px phones). */
   [id] {
-    scroll-margin-top: 5.5rem;
+    scroll-margin-top: 140px;
+  }
+
+  @media (max-width: 639px) {
+    [id] {
+      scroll-margin-top: 84px;
+    }
   }
 
   :focus-visible {
-    outline: 2px solid #FFC53D;
+    outline: 3px solid rgb(var(--c-rust));
     outline-offset: 3px;
     border-radius: 4px;
   }
 
   ::selection {
-    background-color: #FFC53D;
-    color: #0D0B07;
+    background-color: rgb(var(--c-rust));
+    color: rgb(var(--c-paper));
   }
 }
 
@@ -67,7 +293,7 @@
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-paper transition duration-300 hover:bg-accent-light hover:shadow-[0_0_32px_rgba(255,197,61,0.35)];
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-paper transition duration-300 hover:bg-accent-light hover:shadow-[0_0_32px_rgb(var(--c-rust)/0.35)];
   }
 
   .btn-secondary {
@@ -82,13 +308,13 @@
     @apply card transition duration-300 ease-out hover:border-accent/40 hover:shadow-card-hover motion-safe:hover:-translate-y-1;
   }
 
-  /* Glowing card: dark edges, warm amber glow through the middle, and a
-     bright hairline on top. */
+  /* v0 "glow" card, re-pointed to the paper tokens: ivory sheet with a soft
+     rust wash through the middle and a thin rust hairline on top. */
   .card-glow {
     @apply relative overflow-hidden rounded-2xl border border-line transition duration-300 ease-out;
     background:
-      radial-gradient(120% 140% at 50% 0%, rgba(255, 197, 61, 0.10) 0%, rgba(255, 197, 61, 0) 55%),
-      linear-gradient(90deg, #120F09 0%, #241A07 50%, #120F09 100%);
+      radial-gradient(120% 140% at 50% 0%, rgb(var(--c-rust) / .08) 0%, rgb(var(--c-rust) / 0) 55%),
+      linear-gradient(90deg, rgb(var(--c-ivory)) 0%, rgb(var(--c-paper-2)) 50%, rgb(var(--c-ivory)) 100%);
   }
 
   .card-glow::before {
@@ -96,7 +322,7 @@
     position: absolute;
     inset: 0 0 auto 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255, 197, 61, 0.7), transparent);
+    background: linear-gradient(90deg, transparent, rgb(var(--c-rust) / .6), transparent);
   }
 
   /* Use together with .card-glow: class="card-glow card-glow-hover" */
@@ -113,13 +339,34 @@
   }
 }
 
+/* Theme switch cross-fade (View Transition, 0.24s). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: .24s;
+  animation-timing-function: cubic-bezier(.77, 0, .175, 1);
+}
+
+/* Lenis smooth scroll (recommended styles from the library). */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
 /* Respect the OS "reduce motion" setting everywhere (CSS side). Motion-driven
    animations are handled by <MotionProvider reducedMotion="user">. */
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
   *,
   *::before,
   *::after {
@@ -127,4 +374,23 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Keyboard users: first Tab stop on every public page. */
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 60;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgb(var(--c-ink));
+  color: rgb(var(--c-paper));
+  font: 600 14px/1 var(--f-body);
+  text-decoration: none;
+  translate: 0 -200%;
+}
+
+.skip-link:focus {
+  translate: 0 0;
 }

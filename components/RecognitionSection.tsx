@@ -81,7 +81,7 @@ export default function RecognitionSection({
                     <span
                       aria-hidden="true"
                       className={
-                        "relative flex shrink-0 items-center justify-center rounded-full border border-accent/40 bg-accent-soft text-accent shadow-[0_0_40px_rgba(255,197,61,0.25)] transition-transform duration-500 group-hover:rotate-[-8deg] group-hover:scale-105 " +
+                        "relative flex shrink-0 items-center justify-center rounded-full border border-accent/40 bg-accent-soft text-accent shadow-[0_0_40px_rgb(var(--c-rust)/0.25)] transition-transform duration-500 group-hover:rotate-[-8deg] group-hover:scale-105 " +
                         (featured ? "h-20 w-20 sm:h-24 sm:w-24" : "h-14 w-14")
                       }
                     >

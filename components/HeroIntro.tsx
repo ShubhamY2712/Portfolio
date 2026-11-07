@@ -62,7 +62,7 @@ export default function HeroIntro({
       {/* Ambient amber glow behind the hero. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-[-12rem] -z-10 h-[38rem] w-[38rem] -translate-x-1/2 rounded-full md:left-[28%] bg-[radial-gradient(closest-side,rgba(255,197,61,0.16),rgba(255,197,61,0))]"
+        className="pointer-events-none absolute left-1/2 top-[-12rem] -z-10 h-[38rem] w-[38rem] -translate-x-1/2 rounded-full md:left-[28%] bg-[radial-gradient(closest-side,rgb(var(--c-rust)/0.16),rgb(var(--c-rust)/0))]"
       />
 
       <motion.div
@@ -88,7 +88,7 @@ export default function HeroIntro({
           }}
         >
           <HeroDoodles />
-          <div aria-hidden="true" className="absolute inset-[-30%] -z-10 rounded-full bg-[radial-gradient(closest-side,rgba(255,197,61,0.45),rgba(255,197,61,0.08)_60%,transparent)] blur-2xl" />
+          <div aria-hidden="true" className="absolute inset-[-30%] -z-10 rounded-full bg-[radial-gradient(closest-side,rgb(var(--c-rust)/0.45),rgb(var(--c-rust)/0.08)_60%,transparent)] blur-2xl" />
           <div className="relative h-44 w-44 overflow-hidden rounded-full border border-accent/40 bg-gradient-to-b from-accent-soft to-surface shadow-glow sm:h-52 sm:w-52 md:h-64 md:w-64 lg:h-80 lg:w-80">
             {photoUrl ? (
               // eslint-disable-next-line @next/next/no-img-element
@@ -156,7 +156,7 @@ export default function HeroIntro({
                     stroke="currentColor"
                     strokeWidth="5"
                     strokeLinecap="round"
-                    initial={{ pathLength: reduce ? 1 : 0, opacity: reduce ? 1 : 0 }}
+                    initial={{ pathLength: 0, opacity: 0 }}
                     animate={{ pathLength: 1, opacity: 1 }}
                     transition={{ duration: reduce ? 0 : 0.9, delay: reduce ? 0 : 0.9, ease: "easeInOut" }}
                   />

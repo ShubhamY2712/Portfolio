@@ -24,7 +24,7 @@ export function CursorSpotlight() {
         const el: HTMLDivElement | null = ref.current;
         if (!el) return;
         el.style.opacity = "1";
-        el.style.background = `radial-gradient(420px circle at ${e.clientX}px ${e.clientY}px, rgba(255,197,61,0.07), transparent 70%)`;
+        el.style.background = `radial-gradient(420px circle at ${e.clientX}px ${e.clientY}px, rgb(var(--c-rust)/0.07), transparent 70%)`;
       });
     };
     window.addEventListener("pointermove", onMove, { passive: true });

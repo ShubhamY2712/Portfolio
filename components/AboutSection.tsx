@@ -65,7 +65,7 @@ export default function AboutSection({ summary }: { summary: string }) {
                     className="rounded-sm bg-no-repeat px-0.5 font-medium text-ink"
                     style={{
                       backgroundColor: "transparent",
-                      backgroundImage: "linear-gradient(transparent 58%, rgba(255,197,61,0.38) 58%)",
+                      backgroundImage: "linear-gradient(transparent 58%, rgb(var(--c-rust)/0.38) 58%)",
                     }}
                     initial={{ backgroundSize: reduce ? "100% 100%" : "0% 100%" }}
                     whileInView={{ backgroundSize: "100% 100%" }}

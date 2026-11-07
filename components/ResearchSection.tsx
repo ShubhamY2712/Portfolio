@@ -44,7 +44,7 @@ export default function ResearchSection({ paper, coverUrl }: { paper: ResearchPa
       >
         <div
           aria-hidden="true"
-          className="absolute inset-[-12%] -z-10 rounded-full bg-[radial-gradient(closest-side,rgba(255,197,61,0.28),transparent)] blur-2xl"
+          className="absolute inset-[-12%] -z-10 rounded-full bg-[radial-gradient(closest-side,rgb(var(--c-rust)/0.28),transparent)] blur-2xl"
         />
         <TiltCard>
           <div className="relative">

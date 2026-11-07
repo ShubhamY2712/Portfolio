@@ -1,0 +1,105 @@
+/* One pill, two sky windows (day | night). Measured on the reference at 1920px:
+   124 x 50 with a 4px rim and two 58 x 42 windows. */
+.switch {
+  display: flex;
+  flex-shrink: 0;
+  padding: 0;
+  border-radius: 999px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 4px solid var(--sw-rim);
+  background: none;
+  box-shadow: 0 3px 8px -2px rgb(0 0 0 / .35);
+  transition: translate .2s var(--ease-paper), box-shadow .2s var(--ease-paper);
+}
+
+.switch svg {
+  display: block;
+  width: 58px;
+  height: 42px;
+  transition: filter .25s;
+}
+
+/* The window for the theme that is NOT showing is dimmed. */
+.night {
+  filter: saturate(.45) brightness(.8);
+}
+
+:global(:root[data-theme="dark"]) .day {
+  filter: saturate(.45) brightness(.8);
+}
+
+:global(:root[data-theme="dark"]) .night {
+  filter: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :global(:root:not([data-theme="light"])) .day {
+    filter: saturate(.45) brightness(.8);
+  }
+
+  :global(:root:not([data-theme="light"])) .night {
+    filter: none;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .switch:hover {
+    translate: 0 -1px;
+    box-shadow: 0 3px 8px -2px rgb(0 0 0 / .35), inset 0 0 0 2px rgb(var(--c-rust));
+  }
+}
+
+@media (min-width: 1280px) and (max-width: 1439px) {
+  .switch svg {
+    width: 50px;
+    height: 36px;
+  }
+}
+
+/* below 1280 (two-row header): 112 x 44 */
+@media (min-width: 640px) and (max-width: 1279px) {
+  .switch {
+    border-width: 3px;
+  }
+
+  .switch svg {
+    width: 53px;
+    height: 38px;
+  }
+}
+
+/* Phones: a single 56 x 44 window that shows the current sky (reference pattern). */
+@media (max-width: 639px) {
+  .switch {
+    border-width: 3px;
+  }
+
+  .switch svg {
+    width: 50px;
+    height: 38px;
+    filter: none;
+  }
+
+  .switch .night {
+    display: none;
+  }
+
+  :global(:root[data-theme="dark"]) .switch .day {
+    display: none;
+  }
+
+  :global(:root[data-theme="dark"]) .switch .night {
+    display: block;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme="light"])) .switch .day {
+      display: none;
+    }
+
+    :global(:root:not([data-theme="light"])) .switch .night {
+      display: block;
+    }
+  }
+}
