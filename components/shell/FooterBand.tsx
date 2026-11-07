@@ -2,14 +2,15 @@ import Link from "next/link";
 import { Fragment } from "react";
 import type { CSSProperties, ReactNode } from "react";
 import { FileText, Github, IdCard, Linkedin } from "lucide-react";
+import { siWhatsapp } from "simple-icons";
 import PaperDivider from "@/components/shell/PaperDivider";
-import { SITE_NAME } from "@/lib/site";
+import { SITE_NAME, WHATSAPP_URL } from "@/lib/site";
 import styles from "./FooterBand.module.css";
 
 // Footer copy approved via picker on 7 Nov 2026.
 const VERBS: string[] = ["understand", "shape", "design", "build", "test", "ship"];
 const SUBLINE: string = "Open to AI Product Manager and full-stack roles, and always up for a good product conversation.";
-const SIGN_OFF: string = "Designed and built with a lot of cutting chai.";
+const SIGN_OFF: string = "Designed and built with a lot of cutting chai";
 const HAND_LINE: string = "Ask why before how.";
 
 type HillLayer = "back" | "mid" | "front";
@@ -36,6 +37,7 @@ export default function FooterBand({
   const socials: Social[] = [];
   if (linkedin) socials.push({ href: linkedin, label: "LinkedIn", icon: <Linkedin size={20} aria-hidden="true" />, external: true });
   if (github) socials.push({ href: github, label: "GitHub", icon: <Github size={20} aria-hidden="true" />, external: true });
+  socials.push({ href: WHATSAPP_URL, label: "WhatsApp", icon: <WhatsAppIcon size={18} />, external: true });
   if (resumeUrl) socials.push({ href: resumeUrl, label: "Resume", icon: <FileText size={20} aria-hidden="true" />, external: true });
   socials.push({ href: "/card", label: "Digital card", icon: <IdCard size={20} aria-hidden="true" />, external: false });
 
@@ -100,7 +102,7 @@ export default function FooterBand({
           </div>
 
           <p className={styles.copy}>
-            &copy; {year} {SITE_NAME}. {SIGN_OFF}
+            &copy; {year} {SITE_NAME}. {SIGN_OFF} <span aria-hidden="true">☕</span>
           </p>
           <p className={styles.hand}>{HAND_LINE}</p>
         </div>
@@ -121,6 +123,15 @@ export default function FooterBand({
         </div>
       </div>
     </footer>
+  );
+}
+
+/** WhatsApp glyph from the simple-icons set (CC0), drawn in the current text colour. */
+function WhatsAppIcon({ size }: { size: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d={siWhatsapp.path} />
+    </svg>
   );
 }
 

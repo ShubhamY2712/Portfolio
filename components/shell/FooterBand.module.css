@@ -7,7 +7,7 @@
 .band {
   --tile: max(100vw, 900px);
   --lane: clamp(240px, 24vw, 400px);
-  --balloon-w: clamp(84px, 11vw, 170px);
+  --balloon-w: clamp(109px, 14.3vw, 221px); /* 1.3x the reference size, chosen 7 Nov 2026 */
   --balloon-bottom: calc(var(--tile) * .046);
   margin-top: 72px;
   color: var(--band-ink);
@@ -119,7 +119,7 @@
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  font: 400 clamp(17px, 1.39vw, 20px)/1.6 var(--f-body);
+  font: 400 17px/1.6 var(--f-body); /* 17px keeps the full address on one line in the 304px column */
   color: inherit;
   text-decoration: underline;
   text-decoration-thickness: 1px;
@@ -313,18 +313,23 @@
   .hand { text-align: right; }
 }
 
-/* ---------- desktop: 3 columns, scene behind the bottom of the band ---------- */
+/* ---------- desktop: text spans the lane, balloon flies over the hills below it ---------- */
 @media (min-width: 1024px) {
   .body {
-    padding-bottom: calc(8px + var(--tile) * .0853);
+    padding-bottom: max(calc(8px + var(--tile) * .0853), calc(var(--balloon-bottom) + var(--balloon-w) * 767 / 640 + 24px));
   }
 
   .inner {
     grid-template-columns: minmax(0, 1fr) var(--lane) 19rem;
     grid-template-areas:
-      "intro . contact"
-      "copy . hand";
+      "intro intro contact"
+      "copy copy hand";
     padding: 36px 64px 0;
+  }
+
+  /* one line from 1280px; wraps at 1024-1279 where the span is narrower */
+  .sub {
+    max-width: none;
   }
 
   .contact {
