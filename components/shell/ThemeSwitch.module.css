@@ -1,6 +1,11 @@
 /* One pill, two sky windows (day | night). Measured on the reference at 1920px:
    124 x 50 with a 4px rim and two 58 x 42 windows. */
+/* Outer sizes are fixed so a rim that snaps to device pixels (e.g. 3px -> 2.4px
+   at 125% zoom) can't shrink the pill; the windows stretch to fill it. */
 .switch {
+  box-sizing: border-box;
+  width: 124px;
+  height: 50px;
   display: flex;
   flex-shrink: 0;
   padding: 0;
@@ -15,8 +20,10 @@
 
 .switch svg {
   display: block;
-  width: 58px;
-  height: 42px;
+  flex: 1 1 0;
+  min-width: 0;
+  width: auto;
+  height: 100%;
   transition: filter .25s;
 }
 
@@ -51,33 +58,30 @@
 }
 
 @media (min-width: 1280px) and (max-width: 1439px) {
-  .switch svg {
-    width: 50px;
-    height: 36px;
+  .switch {
+    width: 108px;
+    height: 44px;
   }
 }
 
 /* below 1280 (two-row header): 112 x 44 */
 @media (min-width: 640px) and (max-width: 1279px) {
   .switch {
+    width: 112px;
+    height: 44px;
     border-width: 3px;
-  }
-
-  .switch svg {
-    width: 53px;
-    height: 38px;
   }
 }
 
 /* Phones: a single 56 x 44 window that shows the current sky (reference pattern). */
 @media (max-width: 639px) {
   .switch {
+    width: 56px;
+    height: 44px;
     border-width: 3px;
   }
 
   .switch svg {
-    width: 50px;
-    height: 38px;
     filter: none;
   }
 

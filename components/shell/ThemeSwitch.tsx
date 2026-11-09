@@ -55,7 +55,7 @@ export default function ThemeSwitch() {
       className={styles.switch}
       onClick={toggle}
     >
-      <svg className={styles.day} viewBox="0 0 72 50" aria-hidden="true">
+      <svg className={styles.day} viewBox="0 0 72 50" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
         <defs>
           <linearGradient id="sky-day" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0" stopColor="#7FB6E3" />
@@ -70,7 +70,7 @@ export default function ThemeSwitch() {
         <path d="M4 44c0-5 4-8 8-7 1.5-4 7-5 10-1.5 3-1 7 1 7 5 3 0 5 2 5 3.5Z" fill="#FBF7EF" />
         <path d="M44 40c0-3 3-5 6-4 1-3 6-3 7.5 0 2.5-.5 4.5 1.5 4.5 4Z" fill="#FBF7EF" opacity=".9" />
       </svg>
-      <svg className={styles.night} viewBox="0 0 72 50" aria-hidden="true">
+      <svg className={styles.night} viewBox="0 0 72 50" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
         <defs>
           <linearGradient id="sky-night" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0" stopColor="#1B2A55" />

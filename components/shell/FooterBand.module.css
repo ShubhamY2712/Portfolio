@@ -151,6 +151,11 @@
   transition: translate .2s var(--ease-paper);
 }
 
+/* LinkedIn is the bold "in" letters, as on the reference */
+.in {
+  font: 700 17px/1.6 var(--f-body);
+}
+
 @media (hover: hover) and (pointer: fine) {
   .social a:hover {
     translate: 0 -2px;

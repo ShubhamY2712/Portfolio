@@ -1,0 +1,95 @@
+/* Hero scene: style frame v14 (approved 7 Nov 2026). Full 2560:1441 scene on desktop,
+   4:5 on phones centred on Shubham; layers drift with pointer and scroll. */
+
+.hero {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2560 / 1441;
+  overflow: hidden;
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+  --mx: 0;
+  --my: 0;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  translate: calc(var(--mx) * var(--d) * -26px) calc(var(--my) * var(--d) * -12px);
+  transition: translate .5s var(--ease-paper);
+}
+
+.layer img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  user-select: none;
+}
+
+@supports (animation-timeline: scroll()) {
+  .layer {
+    animation: drift linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 100vh;
+  }
+
+  @keyframes drift {
+    to { transform: translateY(calc(var(--d) * -46px)); }
+  }
+}
+
+.torn {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  display: block;
+  width: 100%;
+  height: clamp(18px, 2.6vw, 34px);
+}
+
+.ridge { fill: rgb(var(--c-kraft)); }
+.sheet { fill: rgb(var(--c-paper)); }
+
+/* "Tap & tilt" paper label, top-left of the scene (reference: 44px tall, 16px in) */
+.tilt {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 1;
+  height: 44px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--tilt-bg);
+  color: rgb(var(--c-ink));
+  font: 600 14px/1.2 var(--f-body);
+  box-shadow: 2px 2px 0 rgb(var(--c-mat-side)), 1px 2px 2px rgb(var(--shadow-ink) / .3);
+  cursor: pointer;
+}
+
+@media (max-width: 720px) {
+  .hero { aspect-ratio: 4 / 5; }
+
+  .stage {
+    inset: 0 auto 0 50%;
+    width: auto;
+    height: 100%;
+    aspect-ratio: 2560 / 1441;
+    translate: -52% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .layer {
+    animation: none;
+    transition: none;
+    translate: none;
+  }
+}

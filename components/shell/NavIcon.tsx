@@ -23,14 +23,3 @@ export function MascotIcon({ size }: { size: number }) {
     </>
   );
 }
-
-/** The full mascot sticker (head and shoulders, 640 x 848 source ratio). */
-export function MascotSticker({ width }: { width: number }) {
-  const height: number = Math.round((width * 848) / 640);
-  return (
-    <>
-      <img className="d" src="/art/mascot/mascot-day.webp" alt="" width={width} height={height} decoding="async" draggable={false} />
-      <img className="n" src="/art/mascot/mascot-night.webp" alt="" width={width} height={height} decoding="async" draggable={false} />
-    </>
-  );
-}

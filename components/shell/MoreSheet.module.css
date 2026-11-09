@@ -1,5 +1,5 @@
 /* ⋮ More sheet (phones). Sizes measured on the reference at 375px:
-   sheet 308px wide, 54px rows with 6px gaps, 40px title, 0.34s slide-in. */
+   sheet min(82vw, 340px) wide, 53.6px rows with 6px gaps, 40px title, 0.34s slide-in. */
 
 .dialog {
   position: fixed;
@@ -48,15 +48,19 @@
   inset: 0 auto 0 0;
   display: flex;
   flex-direction: column;
-  width: min(308px, calc(100vw - 48px));
+  width: min(82vw, 340px);
+  border-right: .8px solid rgb(var(--c-ink) / .12);
   border-radius: 0 22px 22px 0;
+  /* five soft colour washes + a 7px dot grain on the page colour (reference values) */
   background:
-    var(--grain),
-    radial-gradient(130px 110px at 78% 30%, rgb(var(--c-rust) / .16), transparent 74%),
-    radial-gradient(150px 120px at 18% 46%, rgb(var(--c-steel) / .16), transparent 74%),
-    radial-gradient(140px 120px at 80% 64%, rgb(var(--c-note) / .5), transparent 74%),
-    var(--sheet-bg);
-  box-shadow: 10px 0 30px -12px rgb(13 23 53 / .45);
+    radial-gradient(130px 110px at 78% 30%, rgb(var(--c-rust) / .52), transparent 74%),
+    radial-gradient(150px 120px at 18% 44%, rgb(79 134 176 / .5), transparent 74%),
+    radial-gradient(140px 120px at 80% 62%, rgb(217 164 65 / .46), transparent 74%),
+    radial-gradient(150px 120px at 22% 82%, rgb(111 154 98 / .46), transparent 74%),
+    radial-gradient(130px 110px at 85% 92%, rgb(79 134 176 / .4), transparent 74%),
+    radial-gradient(rgb(var(--c-ink) / .035) .6px, transparent .7px) 0 0 / 7px 7px,
+    rgb(var(--c-paper));
+  box-shadow: 10px 0 30px -12px rgb(var(--shadow-ink) / .45);
   padding-top: env(safe-area-inset-top, 0px);
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
@@ -158,31 +162,32 @@
   vector-effect: non-scaling-stroke;
 }
 
+/* 72 x 70.5 decoration box overlapping the top of the title row, as on the reference */
 .deco {
-  width: 56px;
-  rotate: 6deg;
-  filter: drop-shadow(1px 2px 2px rgb(13 23 53 / .25));
+  position: absolute;
+  right: 0;
+  top: -4px;
+  width: 72px;
+  height: 70.5px;
 }
 
 .deco img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: contain;
 }
 
 .group {
+  display: flow-root; /* keeps the label's 4px top margin from collapsing into the group's */
   margin-top: 6px;
-}
-
-.group + .group {
-  margin-top: 14px;
 }
 
 .label {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin: 0 4px 8px;
-  font: 600 11px/1 var(--f-body);
+  gap: 10px;
+  margin: 4px 4px 6px;
+  font: 600 11px/1.02 var(--f-body);
   letter-spacing: .16em;
   text-transform: uppercase;
   color: rgb(var(--c-ink-soft));
@@ -207,12 +212,11 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  min-height: 54px;
   padding: 4px 10px 4px 8px;
   border-radius: 14px;
   border: .8px solid var(--row-line);
   background: var(--row-bg);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / .35), 0 4px 14px -6px rgb(13 23 53 / .14);
+  box-shadow: inset 0 1px 0 var(--row-hi), 0 4px 14px -6px var(--row-drop);
   color: rgb(var(--c-ink));
   text-decoration: none;
 }
@@ -238,8 +242,22 @@
 }
 
 .icon img {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
+}
+
+/* brand tiles for the external links (LinkedIn, GitHub, Resume): 34px, radius 7 */
+.brandTile {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 7px;
+  color: #fff;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .35),
+    inset 0 -2px 0 rgb(0 0 0 / .18),
+    1px 3px 4px rgb(var(--shadow-ink) / .28);
 }
 
 .text {
@@ -261,6 +279,13 @@
 .end {
   flex-shrink: 0;
   color: rgb(var(--c-ink-soft));
+}
+
+/* bottom landscape strip: bleeds past the scroll padding, stretched to the box like the reference */
+.land {
+  height: 98px;
+  margin: 0 -12px -8px;
+  background: var(--sheet-land) 50% 100% / 100% 100% no-repeat;
 }
 
 @media (hover: hover) and (pointer: fine) {

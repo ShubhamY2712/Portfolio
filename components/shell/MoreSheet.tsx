@@ -3,9 +3,10 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import type { MouseEvent, ReactNode, SyntheticEvent } from "react";
-import { ChevronRight, Compass, ExternalLink, FileText, Github, Linkedin, Send, X } from "lucide-react";
+import { ChevronRight, ExternalLink, X } from "lucide-react";
+import { GitHubGlyph, LinkedInGlyph, ResumeGlyph } from "@/components/shell/BrandGlyphs";
 import Monogram from "@/components/shell/Monogram";
-import { MascotIcon, MascotSticker, NavIcon } from "@/components/shell/NavIcon";
+import { MascotIcon, NavIcon } from "@/components/shell/NavIcon";
 import { NAV, SHEET_COPY, SOON } from "@/components/shell/nav";
 import type { NavItem, NavKey } from "@/components/shell/nav";
 import { SITE_NAME } from "@/lib/site";
@@ -74,9 +75,10 @@ export default function MoreSheet({
   }
 
   const external: { href: string; label: string; icon: ReactNode }[] = [];
-  if (links.linkedin) external.push({ href: links.linkedin, label: "LinkedIn", icon: <Linkedin size={22} strokeWidth={1.8} aria-hidden="true" /> });
-  if (links.github) external.push({ href: links.github, label: "GitHub", icon: <Github size={22} strokeWidth={1.8} aria-hidden="true" /> });
-  if (links.resumeUrl) external.push({ href: links.resumeUrl, label: "Resume", icon: <FileText size={22} strokeWidth={1.8} aria-hidden="true" /> });
+  // 34px brand tiles with white 22px glyphs, as measured on the reference
+  if (links.linkedin) external.push({ href: links.linkedin, label: "LinkedIn", icon: <BrandTile bg="#0A66C2"><LinkedInGlyph size={22} /></BrandTile> });
+  if (links.github) external.push({ href: links.github, label: "GitHub", icon: <BrandTile bg="#24292F"><GitHubGlyph size={22} /></BrandTile> });
+  if (links.resumeUrl) external.push({ href: links.resumeUrl, label: "Resume", icon: <BrandTile bg="rgb(var(--c-rust))"><ResumeGlyph size={22} /></BrandTile> });
 
   return (
     <dialog
@@ -109,7 +111,8 @@ export default function MoreSheet({
               </svg>
             </p>
             <span className={styles.deco} aria-hidden="true">
-              <MascotSticker width={56} />
+              <img className="d" src="/art/sheet/sheet-sun-day.webp" alt="" width={286} height={282} decoding="async" draggable={false} />
+              <img className="n" src="/art/sheet/sheet-moon-night.webp" alt="" width={287} height={282} decoding="async" draggable={false} />
             </span>
           </div>
 
@@ -125,7 +128,7 @@ export default function MoreSheet({
                       aria-current={item.key === active ? "page" : undefined}
                       onClick={close}
                     >
-                      <span className={styles.icon}><NavIcon navKey={item.key} size={36} /></span>
+                      <span className={styles.icon}><NavIcon navKey={item.key} size={40} /></span>
                       <span className={styles.text}><span className={styles.name}>{item.label}</span></span>
                       <ChevronRight className={styles.end} size={18} aria-hidden="true" />
                     </Link>
@@ -136,12 +139,12 @@ export default function MoreSheet({
                 return [
                   row,
                   <li key="ask">
-                    <SoonRow icon={<MascotIcon size={36} />} name={SHEET_COPY.askLabel} sub={SHEET_COPY.askSub} />
+                    <SoonRow icon={<MascotIcon size={40} />} name={SHEET_COPY.askLabel} sub={SHEET_COPY.askSub} />
                   </li>,
                 ];
               })}
               <li>
-                <SoonRow icon={<Compass size={24} strokeWidth={1.8} aria-hidden="true" />} name={SHEET_COPY.tourLabel} sub={SHEET_COPY.tourSub} />
+                <SoonRow icon={<NavIcon navKey="home" size={40} />} name={SHEET_COPY.tourLabel} sub={SHEET_COPY.tourSub} />
               </li>
             </ul>
           </section>
@@ -151,7 +154,7 @@ export default function MoreSheet({
             <ul className={styles.list}>
               <li>
                 <Link href="/contact" className={styles.row} onClick={close}>
-                  <span className={styles.icon}><Send size={22} strokeWidth={1.8} aria-hidden="true" /></span>
+                  <span className={styles.icon}><img src="/art/sheet/sheet-plane.webp" alt="" width={40} height={40} decoding="async" draggable={false} /></span>
                   <span className={styles.text}><span className={styles.name}>{SHEET_COPY.connectLabel}</span></span>
                   <ChevronRight className={styles.end} size={18} aria-hidden="true" />
                 </Link>
@@ -164,15 +167,27 @@ export default function MoreSheet({
                       <span className={styles.name}>{link.label}</span>
                       <span className="sr-only"> (opens in a new tab)</span>
                     </span>
-                    <ExternalLink className={styles.end} size={16} aria-hidden="true" />
+                    <ExternalLink className={styles.end} size={17} aria-hidden="true" />
                   </a>
                 </li>
               ))}
             </ul>
           </section>
+
+          {/* paper camp strip at the end of the list (98px, full sheet width, as on the reference) */}
+          <div className={styles.land} aria-hidden="true" />
         </div>
       </div>
     </dialog>
+  );
+}
+
+/** A 34px coloured tile holding a white filled glyph. */
+function BrandTile({ bg, children }: { bg: string; children: ReactNode }) {
+  return (
+    <span className={styles.brandTile} style={{ background: bg }} aria-hidden="true">
+      {children}
+    </span>
   );
 }
 

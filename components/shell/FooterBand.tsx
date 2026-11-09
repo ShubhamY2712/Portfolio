@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Fragment } from "react";
 import type { CSSProperties, ReactNode } from "react";
-import { FileText, Github, IdCard, Linkedin } from "lucide-react";
+import { CardGlyph, GitHubGlyph, ResumeGlyph } from "@/components/shell/BrandGlyphs";
 import { siWhatsapp } from "simple-icons";
 import PaperDivider from "@/components/shell/PaperDivider";
 import { SITE_NAME, WHATSAPP_URL } from "@/lib/site";
@@ -35,11 +35,11 @@ export default function FooterBand({
 }) {
   const year: number = new Date().getFullYear();
   const socials: Social[] = [];
-  if (linkedin) socials.push({ href: linkedin, label: "LinkedIn", icon: <Linkedin size={20} aria-hidden="true" />, external: true });
-  if (github) socials.push({ href: github, label: "GitHub", icon: <Github size={20} aria-hidden="true" />, external: true });
+  if (linkedin) socials.push({ href: linkedin, label: "LinkedIn", icon: <span className={styles.in} aria-hidden="true">in</span>, external: true });
+  if (github) socials.push({ href: github, label: "GitHub", icon: <GitHubGlyph size={20} />, external: true });
   socials.push({ href: WHATSAPP_URL, label: "WhatsApp", icon: <WhatsAppIcon size={18} />, external: true });
-  if (resumeUrl) socials.push({ href: resumeUrl, label: "Resume", icon: <FileText size={20} aria-hidden="true" />, external: true });
-  socials.push({ href: "/card", label: "Digital card", icon: <IdCard size={20} aria-hidden="true" />, external: false });
+  if (resumeUrl) socials.push({ href: resumeUrl, label: "Resume", icon: <ResumeGlyph size={20} />, external: true });
+  socials.push({ href: "/card", label: "Digital card", icon: <CardGlyph size={20} />, external: false });
 
   return (
     <footer className={styles.band} aria-labelledby="band-title">

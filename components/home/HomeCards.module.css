@@ -1,0 +1,306 @@
+/* Credential + work cards and achievement items, measured on the reference (9 Nov 2026).
+   Card: ivory sheet, radius 14, padding 10, 4:3 art (3:2 on phones), 34px round arrow 18px in. */
+
+.li {
+  display: grid;
+  min-width: 0;
+}
+
+.card {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-width: 0;
+  padding: 10px;
+  border-radius: 14px;
+  background: rgb(var(--c-ivory));
+  box-shadow: var(--shadow-paper);
+  transition: box-shadow .25s;
+}
+
+.card:hover { box-shadow: var(--shadow-paper-hover); }
+
+.card:has(.link:focus-visible) {
+  outline: 2px solid rgb(var(--c-rust));
+  outline-offset: 3px;
+}
+
+.link:focus-visible { outline: none; }
+
+.art {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgb(var(--c-paper-2));
+}
+
+.art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgb(var(--c-ink) / .08);
+  pointer-events: none;
+}
+
+.art img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: var(--art-filter);
+}
+
+/* logo or name plaque pinned to the bottom-left of the diorama */
+.plaque {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: color-mix(in oklab, #fff 88%, #D7BE93);
+  box-shadow: 0 1px 2px rgb(var(--shadow-ink) / .25);
+  font: 600 14px/1.2 var(--f-display);
+  color: #22305A;
+}
+
+.copy {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  min-width: 0;
+  padding: 14px 8px 8px;
+}
+
+.name {
+  margin: 0;
+  font: 600 clamp(19px, 1.5vw, 22px)/1.15 var(--f-display);
+  font-variation-settings: "opsz" 48, "SOFT" 0;
+  letter-spacing: -.01em;
+  color: rgb(var(--c-ink));
+}
+
+.link {
+  color: inherit;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+/* the whole card is the link */
+.link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: 14px;
+}
+
+.role {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.45;
+  color: rgb(var(--c-ink-2));
+}
+
+.dates {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+  color: rgb(var(--c-ink-soft));
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tagsFirst { margin: 0 0 4px; }
+
+.tags li {
+  padding: 2px 9px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgb(var(--c-ink-2));
+}
+
+.go {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgb(var(--c-ivory));
+  color: rgb(var(--c-ink));
+  box-shadow: 0 1px 3px rgb(var(--shadow-ink) / .28);
+  transition: translate .2s;
+}
+
+.card:hover .go,
+.card:has(.link:focus-visible) .go { translate: 2px 0; }
+
+/* ---------- grids ---------- */
+
+.gridCards { grid-template-columns: minmax(0, 1fr); }
+
+@media (min-width: 900px) {
+  .gridCards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* one column of wide cards between phones and 900px: art 42% left, copy right */
+@media (min-width: 640px) and (max-width: 899px) {
+  .card {
+    grid-template-rows: none;
+    grid-template-columns: minmax(0, 42%) minmax(0, 1fr);
+  }
+
+  .copy {
+    align-content: center;
+    padding: 8px 14px 8px 18px;
+  }
+
+  .art { align-self: start; }
+
+  .go {
+    top: auto;
+    bottom: 18px;
+  }
+}
+
+/* ---------- achievements ---------- */
+
+.award {
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: 6px;
+  height: 100%;
+  padding: 4px clamp(10px, 1.6vw, 24px);
+  text-align: center;
+}
+
+.trophy {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  height: clamp(140px, 14vw, 200px);
+  margin-bottom: 8px;
+}
+
+.trophy img {
+  display: block;
+  flex: 0 0 auto;
+  width: auto;
+  max-width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: 50% 100%;
+  filter: drop-shadow(0 8px 8px rgb(var(--shadow-ink) / .22));
+}
+
+/* stand-in plinth until the trophy art arrives */
+.plinth {
+  width: 46%;
+  height: 22%;
+  border-radius: 4px;
+  background: rgb(var(--c-kraft));
+  box-shadow: 2px 2px 0 rgb(var(--paper-edge));
+}
+
+.awardName {
+  margin: 0;
+  font: 600 clamp(18px, 1.35vw, 21px)/1.2 var(--f-display);
+  font-variation-settings: "opsz" 48, "SOFT" 0;
+  letter-spacing: -.01em;
+  color: rgb(var(--c-ink));
+}
+
+.awardDetail {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.4;
+  color: rgb(var(--c-ink-2));
+  text-wrap: balance;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .trophy::after {
+    content: "";
+    position: absolute;
+    inset: auto 18% -6px;
+    height: 14px;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgb(var(--shadow-ink) / .18), transparent);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s;
+  }
+
+  .trophy img { transition: transform .3s cubic-bezier(.2, .8, .2, 1); }
+  .award:hover .trophy img { transform: translateY(-4px); }
+  .award:hover .trophy::after { opacity: 1; }
+}
+
+.gridAwards {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  row-gap: 28px;
+}
+
+/* tablets: 3 + 2, the second row centred */
+@media (min-width: 640px) {
+  .gridAwards {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 36px 0;
+  }
+
+  .gridAwards > li { grid-column: span 2; }
+  .gridAwards > li:nth-child(4) { grid-column: 2 / span 2; }
+
+  .gridAwards > li:nth-child(3n + 2) .award,
+  .gridAwards > li:nth-child(3n + 3) .award { border-left: 1px solid rgb(var(--c-ink) / .12); }
+}
+
+/* desktop: one row of 5 split by thin rules */
+@media (min-width: 1024px) {
+  .gridAwards {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0;
+  }
+
+  .gridAwards > li,
+  .gridAwards > li:nth-child(4) { grid-column: auto; }
+
+  .gridAwards > li + li .award { border-left: 1px solid rgb(var(--c-ink) / .12); }
+  .award { padding-inline: clamp(8px, 1vw, 18px); }
+}
+
+@media (max-width: 639px) {
+  .art { aspect-ratio: 3 / 2; }
+  .trophy { height: clamp(160px, 26vh, 230px); }
+  .award { padding-block: 8px 0; }
+  .awardName { font-size: 21px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .go { transition: none; }
+
+  .card:hover .go,
+  .card:has(.link:focus-visible) .go { translate: none; }
+}
