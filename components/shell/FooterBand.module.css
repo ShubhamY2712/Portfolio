@@ -7,7 +7,7 @@
 .band {
   --tile: max(100vw, 900px);
   --lane: clamp(240px, 24vw, 400px);
-  --balloon-w: clamp(109px, 14.3vw, 221px); /* 1.3x the reference size, chosen 7 Nov 2026 */
+  --balloon-w: clamp(84px, 11vw, 170px); /* same as the reference ship */
   --balloon-bottom: calc(var(--tile) * .046);
   margin-top: 72px;
   color: var(--band-ink);
@@ -33,29 +33,28 @@
   grid-template-areas:
     "intro"
     "contact"
-    "copy"
-    "hand";
+    "bar";
   max-width: 1320px;
   margin: 0 auto;
   padding: 16px 24px 0;
 }
 
+/* Phone values below; tablet and desktop overrides at the end. All spacing and
+   line heights re-measured on the reference on 9 Nov 2026. */
 .intro { grid-area: intro; }
-.contact { grid-area: contact; display: grid; align-content: start; gap: 12px; margin-top: 10px; }
-.copy { grid-area: copy; }
-.hand { grid-area: hand; }
+.contact { grid-area: contact; display: grid; align-content: start; gap: 6px; margin-top: 10px; }
 
 .eyebrow {
   margin: 0;
-  font: 600 14px/1.6 var(--f-body);
+  font: 600 14px/1.2 var(--f-body);
   letter-spacing: .12em;
   text-transform: uppercase;
   opacity: .8;
 }
 
 .h {
-  margin: 6px 0 0;
-  font: 500 clamp(30px, 2.4vw + 14px, 48px)/1.02 var(--f-display);
+  margin: 2px 0 0;
+  font: 500 clamp(30px, 3.4vw, 48px)/1 var(--f-display);
   font-variation-settings: "SOFT" 30, "opsz" 144;
   letter-spacing: -.015em;
 }
@@ -103,15 +102,14 @@
 
 .sub {
   max-width: 34em;
-  margin: 10px 0 0;
-  font: 400 15px/1.6 var(--f-body);
+  margin: 6px 0 0;
+  font: 400 15px/1.35 var(--f-body);
   opacity: .8;
 }
 
 .label {
   display: block;
-  margin-bottom: 2px;
-  font: 400 14px/1.6 var(--f-body);
+  font: 400 14px/1.25 var(--f-body);
   opacity: .8;
 }
 
@@ -119,7 +117,7 @@
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  font: 400 17px/1.6 var(--f-body); /* 17px keeps the full address on one line in the 304px column */
+  font: 400 clamp(17px, 4.6vw, 18px)/1.6 var(--f-body);
   color: inherit;
   text-decoration: underline;
   text-decoration-thickness: 1px;
@@ -136,7 +134,7 @@
 .social {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -163,20 +161,33 @@
   outline-color: var(--band-ink);
 }
 
+/* copyright + handwritten line share one row with a hairline on top; they
+   wrap onto two lines when they don't fit side by side */
+.bar {
+  grid-area: bar;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 2px 24px;
+  margin-top: 12px;
+  padding: 10px 0;
+  border-top: 1px solid color-mix(in oklab, var(--band-ink) 28%, transparent);
+}
+
 .copy,
 .hand {
-  margin: 18px 0 0;
+  margin: 0;
 }
 
 .copy {
-  font: 400 14px/1.6 var(--f-body);
+  font: 400 14px/1.4 var(--f-body);
   letter-spacing: .08em;
   opacity: .8;
 }
 
 .hand {
-  padding-top: 4px;
-  font: 400 17px/1.6 var(--f-hand);
+  font: 400 17px/1.4 var(--f-hand);
   color: var(--band-accent);
 }
 
@@ -293,58 +304,71 @@
 /* ---------- tablet ---------- */
 @media (min-width: 640px) {
   .inner {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    grid-template-areas:
-      "intro intro"
-      "contact contact"
-      "copy hand";
-    padding: 28px 40px 0;
+    padding: clamp(24px, 3vw, 36px) 40px 0;
   }
 
-  .sub { font-size: 16px; }
+  .eyebrow { line-height: 1.6; }
+  .h { margin-top: 6px; line-height: 1.02; }
+  .sub { margin-top: 10px; font-size: 16px; line-height: 1.6; }
 
   .contact {
-    margin-top: 24px;
-    grid-template-columns: auto auto;
-    justify-content: start;
-    column-gap: 48px;
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 32px;
   }
 
-  .hand { text-align: right; }
+  .label { margin-bottom: 2px; line-height: 1.6; }
+  .email { font-size: 17px; }
+  .social { gap: 10px; }
+
+  .bar {
+    gap: 8px 24px;
+    margin-top: 22px;
+    padding: 12px 0 16px;
+  }
+
+  .copy { line-height: 1.6; }
+  .hand { line-height: 1.6; }
 }
 
-/* ---------- desktop: text spans the lane, balloon flies over the hills below it ---------- */
+/* ---------- desktop: 3 columns, scene behind the bottom of the band ---------- */
 @media (min-width: 1024px) {
   .body {
-    padding-bottom: max(calc(8px + var(--tile) * .0853), calc(var(--balloon-bottom) + var(--balloon-w) * 767 / 640 + 24px));
+    padding-bottom: calc(8px + var(--tile) * .0853);
   }
 
   .inner {
     grid-template-columns: minmax(0, 1fr) var(--lane) 19rem;
     grid-template-areas:
-      "intro intro contact"
-      "copy copy hand";
-    padding: 36px 64px 0;
+      "intro . contact"
+      "copy . hand";
+    padding: clamp(24px, 3vw, 36px) 64px 0;
   }
 
-  /* one line from 1280px; wraps at 1024-1279 where the span is narrower */
-  .sub {
-    max-width: none;
-  }
-
+  /* the contact column sits at the bottom of the intro block */
   .contact {
     margin-top: 0;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 16px;
+    flex-direction: column;
+    align-self: end;
   }
 
-  /* hairline above the copyright row */
+  /* our address is 17px where the reference's is 20px; -1px keeps the same
+     16px gap under "Email" */
+  .email { margin-top: -1px; }
+
+  /* the row's two cells take their own grid columns, each with a hairline */
+  .bar { display: contents; }
+
   .copy,
   .hand {
     margin-top: 22px;
     padding-top: 12px;
     border-top: 1px solid color-mix(in oklab, var(--band-ink) 28%, transparent);
   }
+
+  .copy { grid-area: copy; }
+  .hand { grid-area: hand; text-align: right; }
 
   .scene {
     position: absolute;
@@ -359,6 +383,29 @@
     --to: calc(var(--lane) - 32px - var(--balloon-w));
     left: calc(50% + min(50%, 660px) - 64px - 19rem - var(--lane) + 16px);
     animation-duration: 50s;
+  }
+}
+
+/* ---------- wide desktop: the copyright runs on one line into the lane, so the
+   balloon drifts only in the part of the lane to the right of it ---------- */
+@media (min-width: 1280px) {
+  .inner {
+    grid-template-areas:
+      "intro . contact"
+      "copy copy hand";
+  }
+
+  /* hairline under the first column (or the copyright text, if longer); not across the balloon's lane */
+  .copy {
+    border-top: 0;
+    background: linear-gradient(color-mix(in oklab, var(--band-ink) 28%, transparent), color-mix(in oklab, var(--band-ink) 28%, transparent)) 0 0 / max(calc(100% - var(--lane)), 582px) 1px no-repeat;
+  }
+
+  /* starts 24px after the 582px copyright line, ends 32px before the contact column */
+  .balloonWrap {
+    --from: 0px;
+    --to: calc(min(100vw, 1320px) - 128px - 19rem - 582px - 24px - 32px - var(--balloon-w));
+    left: calc(50% - min(50%, 660px) + 64px + 582px + 24px);
   }
 }
 

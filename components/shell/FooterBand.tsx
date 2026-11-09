@@ -7,11 +7,11 @@ import PaperDivider from "@/components/shell/PaperDivider";
 import { SITE_NAME, WHATSAPP_URL } from "@/lib/site";
 import styles from "./FooterBand.module.css";
 
-// Footer copy approved via picker on 7 Nov 2026.
+// Footer copy approved via picker on 7 Nov 2026 (subline and hand line updated 9 Nov 2026).
 const VERBS: string[] = ["understand", "shape", "design", "build", "test", "ship"];
-const SUBLINE: string = "Open to AI Product Manager and full-stack roles, and always up for a good product conversation.";
+const SUBLINE: string = "From a messy problem to a product people trust.";
 const SIGN_OFF: string = "Designed and built with a lot of cutting chai";
-const HAND_LINE: string = "Ask why before how.";
+const HAND_LINE: string = "Finding the problem behind the problem.";
 
 type HillLayer = "back" | "mid" | "front";
 
@@ -101,10 +101,12 @@ export default function FooterBand({
             </div>
           </div>
 
-          <p className={styles.copy}>
-            &copy; {year} {SITE_NAME}. {SIGN_OFF} <span aria-hidden="true">☕</span>
-          </p>
-          <p className={styles.hand}>{HAND_LINE}</p>
+          <div className={styles.bar}>
+            <p className={styles.copy}>
+              &copy; {year} {SITE_NAME}. {SIGN_OFF} <span aria-hidden="true">☕</span>
+            </p>
+            <p className={styles.hand}>{HAND_LINE}</p>
+          </div>
         </div>
 
         {/* Footer scene: three paper hill layers drift sideways while a paper

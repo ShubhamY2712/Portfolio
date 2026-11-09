@@ -5,7 +5,7 @@ import MobileDock from "@/components/shell/MobileDock";
 import SmoothScroll from "@/components/shell/SmoothScroll";
 import { createClient } from "@/lib/supabase/server";
 import { safeHref } from "@/lib/content";
-import { CONTACT_EMAIL } from "@/lib/site";
+import { CONTACT_EMAIL, RESUME_URL } from "@/lib/site";
 
 /** Shell for every public page. /admin and /login live outside this group and keep their own look. */
 export default async function SiteLayout({ children }: { children: ReactNode }) {
@@ -16,7 +16,7 @@ export default async function SiteLayout({ children }: { children: ReactNode }) 
   const links = {
     linkedin: safeHref(profile?.linkedin),
     github: safeHref(profile?.github),
-    resumeUrl: safeHref(profile?.resume_url),
+    resumeUrl: safeHref(profile?.resume_url) ?? RESUME_URL,
   };
 
   return (
