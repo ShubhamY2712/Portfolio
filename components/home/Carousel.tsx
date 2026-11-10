@@ -41,7 +41,7 @@ export default function Carousel({
 
   return (
     <div className={styles.carousel}>
-      <ul ref={list} className={styles.grid + " " + gridClassName} onScroll={onScroll} tabIndex={-1}>
+      <ul ref={list} className={styles.grid + " " + gridClassName} onScroll={onScroll} tabIndex={-1} data-reveal-list="">
         {children}
       </ul>
       <div className={styles.dots}>

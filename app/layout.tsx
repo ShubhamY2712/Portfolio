@@ -9,7 +9,8 @@ import { SITE_NAME, siteUrl } from "@/lib/site";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
-  style: ["normal", "italic"],
+  // Roman only, like the reference: italic text uses the browser-slanted roman.
+  style: ["normal"],
   axes: ["SOFT", "opsz"],
   variable: "--font-fraunces",
   display: "swap",

@@ -92,6 +92,7 @@
   --f-hand: var(--font-caveat), "Segoe Print", "Bradley Hand", cursive;
   --ease-paper: cubic-bezier(.22, 1, .36, 1);
   --ease-sheet: cubic-bezier(.32, .72, 0, 1);
+  --ease-reveal: cubic-bezier(.2, .7, .2, 1);
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
@@ -448,4 +449,66 @@ html.lenis body {
 
 .skip-link:focus {
   translate: 0 0;
+}
+
+/* ---------- scroll motion (measured on the reference, 9 Nov 2026) ---------- */
+
+/* A section whose first child is a torn paper edge sits above the one before it. */
+:where(:has(> [data-decor="torn"]:first-child)) {
+  position: relative;
+  z-index: 1;
+}
+
+/* Paper lag: as a section's bottom scrolls up, it slows down (up to 200px, 120px on
+   phones) so the next torn sheet slides over it. Paused while something inside has
+   keyboard focus, so nothing focused is ever covered. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    :where(:has(+ * > [data-decor="torn"]:first-child):not(main, [data-scene])),
+    :where(main:has(+ * > [data-decor="torn"]:first-child) > :last-child) {
+      --paper-lag: 200px;
+      animation: paper-lag linear both;
+      animation-timeline: view();
+      animation-range: entry-crossing calc(100% + 80px) entry-crossing calc(100% + 480px);
+    }
+
+    :is(:where(:has(+ * > [data-decor="torn"]:first-child):not(main, [data-scene])),
+      :where(main:has(+ * > [data-decor="torn"]:first-child) > :last-child)):has(:focus-visible) {
+      animation: none;
+    }
+
+    @media (max-width: 767px) {
+      :where(:has(+ * > [data-decor="torn"]:first-child):not(main, [data-scene])),
+      :where(main:has(+ * > [data-decor="torn"]:first-child) > :last-child) {
+        --paper-lag: 120px;
+        animation-range: entry-crossing calc(100% + 80px) entry-crossing calc(100% + 320px);
+      }
+    }
+  }
+}
+
+@keyframes paper-lag {
+  from { translate: 0 0; }
+  to { translate: 0 var(--paper-lag); }
+}
+
+/* Headings and cards rise in (see ScrollReveal). Cards inside phone carousels stay put. */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-reveal-on] [data-reveal] {
+    transition:
+      opacity .5s var(--ease-reveal) calc(var(--i, 0) * 70ms),
+      translate .5s var(--ease-reveal) calc(var(--i, 0) * 70ms);
+  }
+
+  html[data-reveal-on] [data-reveal]:not([data-revealed]):not(:focus-within) {
+    opacity: 0;
+    translate: 0 12px;
+  }
+}
+
+@media (max-width: 639px) {
+  html[data-reveal-on] [data-reveal-list] > [data-reveal]:not([data-revealed]) {
+    opacity: 1;
+    translate: none;
+  }
 }

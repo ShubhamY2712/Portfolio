@@ -1,25 +1,26 @@
-/* Hero scene: style frame v14 (approved 7 Nov 2026). Full 2560:1441 scene on desktop,
-   4:5 on phones centred on Shubham; layers drift with pointer and scroll. */
+/* Hero scene: the full 2560:1441 picture at every width (nothing cropped); layers drift
+   with pointer and scroll. The torn edge below belongs to the intro sheet. */
 
 .hero {
   position: relative;
   width: 100%;
   aspect-ratio: 2560 / 1441;
-  overflow: hidden;
 }
 
+/* clips the layers' 30px bleed */
 .stage {
   position: absolute;
   inset: 0;
+  overflow: hidden;
   --mx: 0;
   --my: 0;
 }
 
 .layer {
   position: absolute;
-  inset: 0;
+  inset: -30px;
   pointer-events: none;
-  translate: calc(var(--mx) * var(--d) * -26px) calc(var(--my) * var(--d) * -12px);
+  translate: calc(var(--mx) * var(--par) * var(--rng) * -1) calc(var(--my) * var(--par) * var(--rng) * -1);
   transition: translate .5s var(--ease-paper);
 }
 
@@ -29,33 +30,36 @@
   width: 100%;
   height: 100%;
   max-width: none;
+  object-fit: cover;
   user-select: none;
 }
 
-@supports (animation-timeline: scroll()) {
-  .layer {
-    animation: drift linear both;
-    animation-timeline: scroll(root);
-    animation-range: 0 100vh;
-  }
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    /* the scene sinks at half the scroll speed for the first screen (reference: 0 → 50vh) */
+    .hero {
+      animation: sink linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0px 100vh;
+    }
 
-  @keyframes drift {
-    to { transform: translateY(calc(var(--d) * -46px)); }
+    /* each layer shifts ±12px × depth while the scene crosses the viewport */
+    .layer {
+      animation: depth linear both;
+      animation-timeline: view();
+    }
   }
 }
 
-.torn {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -1px;
-  display: block;
-  width: 100%;
-  height: clamp(18px, 2.6vw, 34px);
+@keyframes sink {
+  from { translate: 0 0; }
+  to { translate: 0 50vh; }
 }
 
-.ridge { fill: rgb(var(--c-kraft)); }
-.sheet { fill: rgb(var(--c-paper)); }
+@keyframes depth {
+  from { transform: translateY(calc(var(--par) * -12px)); }
+  to { transform: translateY(calc(var(--par) * 12px)); }
+}
 
 /* "Tap & tilt" paper label, top-left of the scene (reference: 44px tall, 16px in) */
 .tilt {
@@ -74,21 +78,8 @@
   cursor: pointer;
 }
 
-@media (max-width: 720px) {
-  .hero { aspect-ratio: 4 / 5; }
-
-  .stage {
-    inset: 0 auto 0 50%;
-    width: auto;
-    height: 100%;
-    aspect-ratio: 2560 / 1441;
-    translate: -52% 0;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .layer {
-    animation: none;
     transition: none;
     translate: none;
   }

@@ -36,7 +36,7 @@ export default function HomeSection({
       <PaperDivider sheet={BG[tone]} shade="rgb(var(--shadow-ink))" />
       <div className={styles.body}>
         <div className={styles.wrap}>
-          <div className={styles.head}>
+          <div className={styles.head} data-reveal="">
             <p className={styles.eyebrow}>{copy.eyebrow}</p>
             <h2 id={id + "-title"} className={styles.h2}>
               {copy.title}

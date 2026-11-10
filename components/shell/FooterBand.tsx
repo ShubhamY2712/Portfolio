@@ -9,7 +9,7 @@ import styles from "./FooterBand.module.css";
 
 // Footer copy approved via picker on 7 Nov 2026 (subline and hand line updated 9 Nov 2026).
 const VERBS: string[] = ["understand", "shape", "design", "build", "test", "ship"];
-const SUBLINE: string = "From a messy problem to a product people trust.";
+const SUBLINE: string = "From a “messy problem” to a “product people trust.”";
 const SIGN_OFF: string = "Designed and built with a lot of cutting chai";
 const HAND_LINE: string = "Finding the problem behind the problem.";
 

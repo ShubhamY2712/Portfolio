@@ -9,7 +9,7 @@ export function CredentialItem({ card }: { card: CredentialCard }) {
     <li className={styles.li}>
       <article className={styles.card}>
         <div className={styles.art}>
-          {card.art && <img src={card.art} alt="" width={640} height={480} loading="lazy" decoding="async" />}
+          {card.art && <img src={card.art} alt="" width={960} height={720} loading="lazy" decoding="async" />}
           <span className={styles.plaque}>{card.plaque}</span>
         </div>
         <div className={styles.copy}>
@@ -32,7 +32,7 @@ export function WorkItem({ card }: { card: WorkCard }) {
     <li className={styles.li}>
       <article className={styles.card + " " + styles.work}>
         <div className={styles.art}>
-          {card.art && <img src={card.art} alt="" width={800} height={600} loading="lazy" decoding="async" />}
+          {card.art && <img src={card.art} alt="" width={960} height={720} loading="lazy" decoding="async" />}
         </div>
         <div className={styles.copy}>
           <Chips items={card.chips} first />

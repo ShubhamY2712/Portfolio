@@ -5,7 +5,7 @@ export type SectionCopy = {
   eyebrow: string;
   title: string; // the part before the accent
   accent: string; // the word(s) shown in terracotta
-  sub: string;
+  sub: string; // "\n" marks a fixed line break
 };
 
 export type CredentialCard = {
@@ -42,7 +42,7 @@ export const INTRO = {
   h1: ["I shape and build", "AI products people", "can trust."],
   tagline: ["Think like a user. ", "Decide like a PM.", " Build like a developer."],
   summary:
-    "Product Intern at Pinaka Intelligence and final-year AI & Data Science student. Building InvAI, an AI-powered supply chain intelligence SaaS, and CreditSaathi, an AI-driven alternative credit scoring platform. Co-author of the published paper “The Impact of AI in the Indian Economy”.",
+    "Product Intern at Pinaka Intelligence and final-year AI & Data Science student. Building InvAI, an AI-powered supply chain intelligence SaaS, and CreditSaathi, an AI-driven alternative credit scoring platform.",
   workCta: "View my work",
   askCta: "Ask Shubham",
   askCaption: "My AI portfolio assistant",
@@ -66,7 +66,7 @@ export const CREDENTIAL_CARDS: CredentialCard[] = [
     chips: ["Product", "Growth & Technology"],
     href: "/work",
     plaque: "Pinaka",
-    art: null,
+    art: "/art/home/cred-pinaka.webp",
   },
   {
     name: "Product Builder",
@@ -75,7 +75,7 @@ export const CREDENTIAL_CARDS: CredentialCard[] = [
     chips: ["InvAI", "CreditSaathi", "Groundtruth"],
     href: "/projects",
     plaque: "Builder",
-    art: null,
+    art: "/art/home/cred-builder.webp",
   },
   {
     name: "Published research",
@@ -84,7 +84,7 @@ export const CREDENTIAL_CARDS: CredentialCard[] = [
     chips: ["Nova", "AI & Economy"],
     href: "/about#research",
     plaque: "Nova",
-    art: null,
+    art: "/art/home/cred-research.webp",
   },
 ];
 
@@ -92,7 +92,7 @@ export const WORK: SectionCopy = {
   eyebrow: "Selected work",
   title: "From idea to ",
   accent: "working product.",
-  sub: "From messy problems to working AI products.",
+  sub: "From messy problems to\nworking AI products.",
 };
 
 export const VIEW_ALL_WORK: string = "View all work";
@@ -103,21 +103,21 @@ export const WORK_CARDS: WorkCard[] = [
     pitch: "AI-powered, multi-tenant SaaS for supply chain intelligence, from single-store retailers to franchises.",
     chips: ["AI", "SaaS", "Supply chain"],
     href: "/projects?product=invai",
-    art: null,
+    art: "/art/home/work-invai.webp",
   },
   {
     name: "CreditSaathi",
     pitch: "Alternative credit scoring for gig workers and MSMEs, with an open fairness audit built in.",
     chips: ["AI", "ML", "FinTech"],
     href: "/projects?product=creditsaathi",
-    art: null,
+    art: "/art/home/work-creditsaathi.webp",
   },
   {
     name: "Groundtruth",
     pitch: "Helps companies pick where to open their first India GCC, with every number linked to its source.",
     chips: ["AI", "Data", "Strategy"],
     href: "/projects?product=groundtruth",
-    art: null,
+    art: "/art/home/work-groundtruth.webp",
   },
 ];
 
@@ -125,15 +125,15 @@ export const ACHIEVEMENTS: SectionCopy = {
   eyebrow: "Achievements",
   title: "Moments that ",
   accent: "counted.",
-  sub: "Behind every milestone, a chapter I’m still proud of.",
+  sub: "Behind every milestone,\na chapter I’m still proud of.",
 };
 
 export const ACHIEVEMENT_ITEMS: Achievement[] = [
-  { name: "Best Social Impact Award", detail: "HackVerse Hackathon · winner · 2025", art: null },
-  { name: "First Prize, Nukkad Natak", detail: "NSS camp · led the street play · 2025–26", art: null },
-  { name: "Innovation and Creativity Award", detail: "ADYPU NSS Unit · 2024–25", art: null },
-  { name: "Outreach Coordinator, NSS", detail: "Led 200 volunteers · ADYPU · 2025–26", art: null },
-  { name: "President, Literature Club", detail: "ADYPU · 2023–25", art: null },
+  { name: "Best Social Impact Award", detail: "HackVerse Hackathon · winner · 2025", art: "/art/home/award-hackverse.webp" },
+  { name: "First Prize, Nukkad Natak", detail: "NSS camp · led the street play · 2025–26", art: "/art/home/award-nukkad.webp" },
+  { name: "Innovation and Creativity Award", detail: "ADYPU NSS Unit · 2024–25", art: "/art/home/award-innovation.webp" },
+  { name: "Outreach Coordinator, NSS", detail: "Led 200 volunteers · ADYPU · 2025–26", art: "/art/home/award-nss.webp" },
+  { name: "President, Literature Club", detail: "ADYPU · 2023–25", art: "/art/home/award-literature.webp" },
 ];
 
 export const ASK = {
@@ -144,8 +144,8 @@ export const ASK = {
   lead: "Curious about Shubham’s work, projects, experience, skills, product thinking or learnings? Ask away; every answer comes straight from this portfolio.",
   callout: "That’s me!",
   sticky: "I read all of Shubham’s work over cutting chai, so you don’t have to.",
-  notebookTitle: "Your turn to ask.",
-  nudge: "Stuck? Steal one of these ↓",
+  notebookTitle: "Curious about something?",
+  nudge: "Need a nudge? Try…",
   placeholder: "Ask anything, I’ll dig it up…",
   soon: "Warming up…",
   more: "Show me more",

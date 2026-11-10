@@ -33,6 +33,7 @@ export default function PaperDivider({
       viewBox="0 0 1440 44"
       preserveAspectRatio="none"
       aria-hidden="true"
+      data-decor="torn"
     >
       {shade && (
         <g className={styles.shade} transform="translate(0 2)">

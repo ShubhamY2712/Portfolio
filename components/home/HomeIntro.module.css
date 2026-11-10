@@ -1,46 +1,112 @@
-/* Intro column: style frame v14 values (measured on the reference at 1920 / 1440 / 1024 / 390). */
+/* Intro column, re-measured on the reference (9 Nov 2026) at 1920 / 1440 / 1024 / 768 / 375:
+   1320px container (24 / 40 / 64px gutters), fluid gaps between eyebrow, video, H1, tagline,
+   summary and buttons. */
+
+/* paper sheet over the scene: torn edge pulled up 44px, stacked above the sinking scene (the scene has no z-index) */
+.sheet {
+  position: relative;
+  z-index: 1;
+  margin-top: -44px;
+}
+
+.sheetBody {
+  position: relative;
+  background: rgb(var(--c-paper));
+}
 
 .intro {
   position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 1180px;
+  max-width: 1320px;
   margin: 0 auto;
-  padding-block: 26px 80px;
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: clamp(36px, 5.4vw, 80px) clamp(72px, 8.4vw, 124px);
+  padding-left: max(24px, env(safe-area-inset-left, 0px));
+  padding-right: max(24px, env(safe-area-inset-right, 0px));
   text-align: center;
   overflow-x: clip;
 }
 
-.decorLoop {
+/* margin layer (reference values: hidden below 768px) */
+.margin {
   position: absolute;
-  right: 4%;
-  top: 10px;
-  width: clamp(80px, 9vw, 150px);
-  height: auto;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
   pointer-events: none;
 }
 
-.decorLoop path {
-  fill: none;
-  stroke: var(--decor);
-  stroke-width: 2;
-  stroke-linecap: round;
+.margin > * {
+  position: absolute;
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .margin > * { display: block; }
+}
+
+.patchTl,
+.patchH1 { background: color-mix(in oklab, rgb(var(--c-paper-2)) 70%, rgb(var(--c-paper))); }
+
+/* our own torn outlines */
+.patchTl {
+  top: -10px;
+  left: -30px;
+  width: clamp(180px, 18vw, 290px);
+  height: 190px;
+  rotate: -4deg;
+  clip-path: polygon(0 0, 100% 0, 97% 15%, 100% 31%, 94% 47%, 96% 60%, 86% 74%, 71% 80%, 55% 90%, 36% 87%, 20% 97%, 0 100%);
+}
+
+.patchH1 {
+  top: clamp(90px, 10vw, 150px);
+  left: calc(50% - clamp(300px, 34vw, 500px));
+  width: clamp(200px, 20vw, 300px);
+  height: clamp(180px, 18vw, 270px);
+  rotate: 3deg;
+  background: color-mix(in oklab, rgb(var(--c-paper-2)) 45%, rgb(var(--c-paper)));
+  clip-path: polygon(5% 6%, 20% 1%, 41% 7%, 60% 0, 81% 8%, 100% 4%, 97% 28%, 100% 50%, 93% 73%, 97% 95%, 74% 100%, 51% 95%, 30% 100%, 9% 94%, 0 72%, 5% 50%, 1% 27%);
 }
 
 .decorGrid {
-  position: absolute;
-  right: 0;
-  bottom: 120px;
-  width: clamp(140px, 18vw, 340px);
-  aspect-ratio: 1.2;
-  pointer-events: none;
-  rotate: -4deg;
-  background-image: linear-gradient(var(--decor) 1px, transparent 1px), linear-gradient(90deg, var(--decor) 1px, transparent 1px);
-  background-size: 18px 18px;
-  clip-path: polygon(6% 4%, 100% 0, 100% 100%, 0 96%, 3% 52%);
+  right: -20px;
+  bottom: -20px;
+  width: clamp(200px, 20vw, 300px);
+  height: clamp(220px, 22vw, 320px);
+  rotate: -6deg;
+  background:
+    linear-gradient(var(--rule-blue) 1px, transparent 1px) 0 0 / 16px 16px,
+    linear-gradient(90deg, var(--rule-blue) 1px, transparent 1px) 0 0 / 16px 16px,
+    color-mix(in oklab, rgb(var(--c-paper-2)) 60%, rgb(var(--c-paper)));
+  clip-path: polygon(7% 3%, 30% 0, 55% 5%, 78% 1%, 100% 6%, 100% 100%, 0 100%, 3% 74%, 0 50%, 4% 26%);
+}
+
+.leaf {
+  bottom: -30px;
+  left: -24px;
+  width: clamp(140px, 15vw, 220px);
+  height: auto;
+  rotate: 24deg;
+  fill: rgb(var(--c-ink) / .05);
+}
+
+.leaf path:first-child {
+  fill: none;
+  stroke: rgb(var(--c-ink) / .06);
+  stroke-width: 4;
+}
+
+.decorLoop {
+  top: -6px;
+  right: clamp(30px, 5vw, 90px);
+  width: clamp(90px, 9vw, 130px);
+  height: auto;
+  fill: none;
+  stroke: rgb(var(--c-ink) / .22);
+  stroke-width: 1.2;
+  stroke-linecap: round;
 }
 
 .eyebrow {
@@ -55,9 +121,9 @@
 .video {
   position: relative;
   box-sizing: border-box;
-  width: min(966px, 100%);
-  margin: 30px 0 0;
-  padding: 14px 14px 16px;
+  width: min(960px, 100%);
+  margin: clamp(22px, 2.4vw, 34px) 0 0;
+  padding: 11px 11px 13px;
   background: var(--frame);
   border: 1px solid var(--frame-line);
   rotate: -.4deg;
@@ -85,8 +151,7 @@
   padding: 0;
   border: 0;
   overflow: hidden;
-  background: radial-gradient(120% 90% at 50% 40%, #3B6FD1, #1A3B86 70%, #0E2457);
-  color: #FBF7EF;
+  background: rgb(var(--c-paper-2));
 }
 
 button.poster { cursor: pointer; }
@@ -98,46 +163,43 @@ button.poster { cursor: pointer; }
   border: 0;
 }
 
-.posterMascot {
+/* poster art fills the frame; day and night versions swap with the theme */
+.posterArt {
   position: absolute;
-  left: 6%;
-  bottom: 0;
-  width: 24%;
-  height: auto;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.posterLines {
+/* "60-second intro · coming soon" until the video exists */
+.posterTag {
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 16%;
-  display: grid;
-  gap: 6px;
-  justify-items: center;
+  left: 12px;
+  bottom: 12px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: rgb(var(--c-ivory) / .92);
+  box-shadow: 0 1px 3px rgb(var(--shadow-ink) / .25);
+  font: 600 13px/1.2 var(--f-body);
+  color: rgb(var(--c-ink));
 }
 
-.posterLines b {
-  font: 700 clamp(28px, 5.5vw, 78px)/1 var(--f-body);
-  letter-spacing: -.02em;
-}
-
-.posterLines span {
-  font: 500 clamp(13px, 1.3vw, 18px) var(--f-body);
-  opacity: .85;
-}
-
+/* reference play button: navy glass disc, 2.4px ivory ring, soft halo and drop shadow */
 .play {
   position: absolute;
-  top: 56%;
+  top: 50%;
   left: 50%;
   display: grid;
   place-items: center;
-  width: clamp(56px, 6vw, 84px);
+  box-sizing: border-box;
+  width: clamp(56px, 6vw, 80px);
   aspect-ratio: 1;
   translate: -50% -50%;
+  border: 2.4px solid #FBF7EF;
   border-radius: 50%;
-  background: rgb(11 21 48 / .55);
-  box-shadow: 0 0 0 2px rgb(251 247 239 / .6);
+  background: rgb(13 23 53 / .62);
+  box-shadow: 0 0 0 6px rgb(251 247 239 / .18), 0 12px 26px rgb(13 23 53 / .38);
 }
 
 .play svg {
@@ -147,7 +209,7 @@ button.poster { cursor: pointer; }
 
 .h1 {
   max-width: 1192px;
-  margin: 44px 0 0;
+  margin: clamp(20px, 3vw, 44px) 0 0;
   font: 500 clamp(34px, 5.6vw, 80px)/1.08 var(--f-display);
   font-variation-settings: "SOFT" 30, "opsz" 144;
   letter-spacing: -.015em;
@@ -204,8 +266,7 @@ button.poster { cursor: pointer; }
 }
 
 .tagline {
-  margin: 39px 0 0;
-  padding-bottom: 10px;
+  margin: clamp(22px, 3vw, 44px) 0 0;
   font: 400 clamp(24px, 2.4vw, 34px)/1.1 var(--f-hand);
   color: rgb(var(--c-ink));
   text-wrap: wrap;
@@ -213,25 +274,28 @@ button.poster { cursor: pointer; }
 
 .tagline em {
   position: relative;
+  display: inline-block;
   font-style: normal;
 }
 
+/* thin hand-drawn underline (reference: ~1.5px stroke in a .22em band, ink at 38%),
+   our own gently rising curve */
 .tagline em::after {
   content: "";
   position: absolute;
-  left: -2px;
-  right: -2px;
+  left: -2%;
+  right: -6%;
   bottom: -.2em;
   height: .22em;
-  border-radius: 4px;
   background: currentColor;
   opacity: .38;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 10' preserveAspectRatio='none'%3E%3Cpath d='M2 6.5 C 46 7.5, 104 2.5, 198 4' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") 50% 50% / 100% 100% no-repeat;
 }
 
 .summary {
-  max-width: 800px;
-  margin: 29px 0 0;
-  font-size: 17px;
+  max-width: 40em;
+  margin: clamp(18px, 2.4vw, 34px) 0 0;
+  font-size: clamp(17px, 1.4vw, 20px);
   line-height: 1.65;
   color: rgb(var(--c-ink-2));
   text-wrap: wrap;
@@ -242,20 +306,20 @@ button.poster { cursor: pointer; }
   flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;
-  gap: 22px 36px;
-  margin-top: 40px;
-  padding-bottom: 32px;
+  gap: 12px clamp(14px, 2.4vw, 36px);
+  margin-top: clamp(22px, 2.8vw, 40px);
 }
 
 .btn {
   display: inline-flex;
   align-items: center;
   gap: 12px;
+  justify-content: center;
   box-sizing: border-box;
-  height: 64px;
-  padding: 0 40px;
+  min-height: 52px;
+  padding: 0 30px;
   border-radius: 999px;
-  font: 500 24px/1 var(--f-display);
+  font: 500 clamp(19px, 1.7vw, 24px)/1 var(--f-display);
   font-variation-settings: "opsz" 36;
   text-decoration: none;
   cursor: pointer;
@@ -280,7 +344,13 @@ button.poster { cursor: pointer; }
   box-shadow: 2px 2px 0 var(--ghost-side);
 }
 
-.ask { position: relative; }
+/* button, then its caption 8px below (reference) */
+.ask {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+}
 
 .askRow {
   position: relative;
@@ -289,10 +359,10 @@ button.poster { cursor: pointer; }
 
 .askHead {
   position: absolute;
-  left: calc(100% + 9px);
+  left: calc(100% + 12px);
   top: -12px;
-  height: 84px;
-  width: auto;
+  width: 64px;
+  height: auto;
   max-width: none;
   rotate: 6deg;
   transition: translate .2s var(--ease-paper), rotate .2s var(--ease-paper);
@@ -304,49 +374,58 @@ button.poster { cursor: pointer; }
 }
 
 .askCap {
-  position: absolute;
-  left: 50%;
-  top: calc(100% + 8px);
-  translate: -50% 0;
   white-space: nowrap;
   font: 400 13px/1.2 var(--f-body);
   color: rgb(var(--c-ink-2));
 }
 
-.askCap svg {
+/* reference: 34×23, 14px in from the button's right edge, 52px below its top */
+.askArrow {
   position: absolute;
-  left: calc(100% + 31px);
-  top: -20px;
+  left: calc(100% - 14px);
+  top: 52px;
   width: 34px;
   height: 23px;
   overflow: visible;
+  pointer-events: none;
 }
 
-.askCap path {
+.askArrow path {
   fill: none;
   stroke: rgb(var(--c-ink-2));
-  stroke-width: 1.6;
+  stroke-width: 1.8;
   stroke-linecap: round;
   stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
 }
 
+@media (min-width: 768px) {
+  .intro {
+    padding-left: max(40px, env(safe-area-inset-left, 0px));
+    padding-right: max(40px, env(safe-area-inset-right, 0px));
+  }
+}
+
+@media (min-width: 1024px) {
+  .intro { padding-inline: 64px; }
+  .btn { min-height: 64px; padding: 0 40px; }
+}
+
+/* under the taller desktop header the sheet starts closer to the eyebrow */
 @media (min-width: 1280px) {
-  .summary { font-size: 20px; }
+  .intro { padding-top: max(20px, calc(clamp(36px, 5.4vw, 80px) - 52px)); }
 }
 
-@media (max-width: 1100px) {
-  .btn { font-size: 19px; }
-  .video { width: min(886px, 100%); }
-}
-
-@media (max-width: 600px) {
-  .intro { padding-top: 35px; }
-  .eyebrow { letter-spacing: .16em; }
-  .video { width: calc(100% - 13px); margin-top: 20px; }
-  .h1 { margin-top: 20px; }
-  .tagline { margin-top: 22px; padding-bottom: 6px; }
+/* the summary shows from 768px */
+@media (max-width: 767px) {
   .summary { display: none; }
-  .ctas { margin-top: 18px; gap: 12px; }
-  .btn { height: 52px; padding: 0 24px; }
-  .askHead { height: 64px; top: -6px; }
+}
+
+/* phones: a smaller mascot and arrow beside the 52px Ask button (the reference hides them; we keep ours) */
+@media (max-width: 639px) {
+  .eyebrow { letter-spacing: .16em; }
+  .btn { padding: 0 20px; }
+  .posterTag { left: 8px; bottom: 8px; padding: 4px 8px; font-size: 11px; }
+  .askHead { left: calc(100% + 10px); top: -8px; width: 52px; }
+  .askArrow { left: calc(100% - 12px); top: 40px; width: 30px; height: 20px; }
 }

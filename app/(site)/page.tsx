@@ -4,6 +4,7 @@ import HomeSection, { ViewAll } from "@/components/home/HomeSection";
 import Carousel from "@/components/home/Carousel";
 import { AchievementItem, CredentialItem, WorkItem } from "@/components/home/HomeCards";
 import AskSection from "@/components/home/AskSection";
+import ScrollReveal from "@/components/home/ScrollReveal";
 import cards from "@/components/home/HomeCards.module.css";
 import {
   ACHIEVEMENT_ITEMS,
@@ -54,6 +55,7 @@ export default function Home() {
       </HomeSection>
 
       <AskSection />
+      <ScrollReveal />
     </main>
   );
 }

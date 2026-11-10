@@ -25,12 +25,9 @@ export default function VideoFacade({ videoId }: { videoId: string | null }) {
 
   const poster = (
     <>
-      <img className={styles.posterMascot + " d"} src="/art/mascot/mascot-day.webp" alt="" width={640} height={848} />
-      <img className={styles.posterMascot + " n"} src="/art/mascot/mascot-night.webp" alt="" width={640} height={848} />
-      <span className={styles.posterLines}>
-        <b>{INTRO.posterName}</b>
-        <span>{INTRO.posterLine}</span>
-      </span>
+      <img className={styles.posterArt + " d"} src="/art/home/poster-intro-day.webp" alt="" width={1672} height={941} decoding="async" />
+      <img className={styles.posterArt + " n"} src="/art/home/poster-intro-night.webp" alt="" width={1672} height={941} decoding="async" />
+      {!videoId && <span className={styles.posterTag}>{INTRO.posterLine}</span>}
       <span className={styles.play} aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="#FBF7EF"><path d="M6 4l14 8-14 8z" /></svg>
       </span>

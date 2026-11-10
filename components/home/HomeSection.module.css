@@ -88,6 +88,11 @@
   .all:hover svg { translate: none; }
 }
 
+/* in the narrow heading column the subline keeps the line breaks written in the copy */
+@media (min-width: 1360px) {
+  .sub { white-space: pre-line; }
+}
+
 @media (min-width: 1360px) {
   .wrap {
     grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);

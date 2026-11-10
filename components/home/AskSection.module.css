@@ -40,28 +40,52 @@
   clip-path: polygon(0 9%, 18% 1%, 44% 8%, 69% 0, 100% 6%, 97% 52%, 100% 94%, 61% 100%, 28% 95%, 3% 100%);
 }
 
+/* torn scrap of squared paper (light in both themes, like a real offcut) */
 .scrapGrid {
-  left: 88px;
-  bottom: -60px;
-  width: 146px;
-  height: 160px;
+  left: 92px;
+  bottom: -64px;
+  width: 132px;
+  height: 148px;
   rotate: 7deg;
+  opacity: .75;
   background:
-    linear-gradient(var(--decor) 1px, transparent 1px) 0 0 / 14px 14px,
-    linear-gradient(90deg, var(--decor) 1px, transparent 1px) 0 0 / 14px 14px,
-    rgb(var(--c-ivory));
-  box-shadow: 1px 2px 3px rgb(var(--shadow-ink) / .12);
-  clip-path: polygon(3% 0, 100% 4%, 96% 100%, 0 97%);
+    linear-gradient(90deg, transparent 18px, rgb(199 84 56 / .55) 18px 19.5px, transparent 19.5px),
+    linear-gradient(rgb(92 120 160 / .35) 1px, transparent 1px) 0 0 / 12px 12px,
+    linear-gradient(90deg, rgb(92 120 160 / .35) 1px, transparent 1px) 0 0 / 12px 12px,
+    #EFE7D6;
+  clip-path: polygon(0 3%, 9% 0, 17% 2%, 26% 0, 37% 3%, 48% 1%, 58% 4%, 69% 1%, 80% 3%, 91% 0, 100% 2%, 98% 14%, 100% 27%, 97% 39%, 100% 52%, 98% 66%, 100% 79%, 97% 91%, 100% 100%, 0 100%, 2% 88%, 0 74%, 3% 61%, 0 47%, 2% 33%, 0 19%);
 }
 
+/* torn rust paper offcut */
 .scrapRust {
-  right: 30%;
-  bottom: -100px;
-  width: 172px;
-  height: 172px;
+  right: 26%;
+  bottom: -120px;
+  width: 150px;
+  height: 150px;
   rotate: -9deg;
-  background: rgb(var(--c-rust) / .85);
-  clip-path: polygon(8% 4%, 52% 0, 96% 7%, 100% 58%, 92% 100%, 40% 95%, 0 100%, 4% 46%);
+  opacity: .8;
+  background: rgb(var(--c-rust));
+  clip-path: polygon(4% 9%, 12% 4%, 19% 7%, 27% 2%, 36% 6%, 44% 1%, 53% 5%, 61% 0, 70% 4%, 78% 1%, 86% 6%, 94% 2%, 99% 10%, 96% 22%, 100% 35%, 97% 49%, 100% 63%, 96% 78%, 99% 92%, 90% 100%, 10% 100%, 1% 94%, 4% 80%, 0 66%, 3% 52%, 0 37%, 3% 23%);
+}
+
+/* our own folded-paper leaf, top left */
+.leaf {
+  position: absolute;
+  left: -42px;
+  top: 244px;
+  width: 92px;
+  height: 154px;
+  rotate: 18deg;
+  overflow: visible;
+}
+
+.leafBlade { fill: #6F9A62; }
+
+.leafVein {
+  fill: none;
+  stroke: #496D58;
+  stroke-width: 2.5;
+  stroke-linecap: round;
 }
 
 /* ---------- layout ---------- */
@@ -117,8 +141,9 @@
 }
 
 .spark {
-  width: .75em;
-  height: .75em;
+  width: .62em;
+  height: .62em;
+  flex-shrink: 0;
   rotate: 14deg;
   fill: none;
   stroke: rgb(var(--c-rust));
@@ -128,9 +153,12 @@
 
 .hand {
   grid-area: sub;
+  justify-self: start;
   margin: 2px 0 0;
   font: 600 20px/1.2 var(--f-hand);
   color: rgb(var(--c-ink-2));
+  text-decoration: underline 2px rgb(var(--c-ink-2) / .7);
+  text-underline-offset: 4px;
 }
 
 .lead {
@@ -149,16 +177,40 @@
 }
 
 .figure {
-  vertical-align: bottom;
+  position: relative;
+  z-index: 1;
+  vertical-align: bottom; /* no display rule here: the global .d/.n theme swap sets it */
   width: auto;
   height: 104px;
+  filter: drop-shadow(0 10px 14px rgb(var(--shadow-ink) / .18));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .figure { transition: translate .4s var(--ease-paper); }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .mascot:hover .figure { translate: 0 -3px; }
+}
+
+/* torn paper ledge the cut-out stands on */
+.mascot::after {
+  content: "";
+  position: absolute;
+  inset: auto -14% -6px;
+  z-index: 2;
+  height: 14px;
+  background: rgb(var(--c-ivory));
+  box-shadow: 0 3px 6px -2px rgb(var(--shadow-ink) / .22);
+  clip-path: polygon(0 30%, 7% 12%, 16% 24%, 27% 6%, 39% 20%, 51% 8%, 63% 26%, 75% 10%, 86% 22%, 100% 14%, 100% 100%, 0 100%);
 }
 
 .callout {
   display: none;
   position: absolute;
-  left: 46%;
-  top: -8px;
+  z-index: 3;
+  top: 0;
+  right: -8px;
   margin: 0;
   rotate: -4deg;
   font: 400 20px/1.1 var(--f-hand);
@@ -168,8 +220,8 @@
 
 .calloutArrow {
   display: block;
-  width: 50px;
-  height: 37px;
+  width: 48px;
+  height: 34px;
   margin: 2px 0 0 30px;
   overflow: visible;
 }
@@ -207,8 +259,18 @@
   left: calc(50% - 26px);
   width: 52px;
   height: 16px;
-  rotate: 2deg;
-  background: var(--tape);
+  rotate: -4deg;
+  background: rgb(var(--c-rust) / .38);
+}
+
+/* small mark after the note and the callout (the reference uses a paw) */
+.stickySpark {
+  display: inline-block;
+  width: .8em;
+  height: .8em;
+  margin-left: .2em;
+  vertical-align: -.05em;
+  fill: rgb(var(--c-ink));
 }
 
 /* ---------- notebook page ---------- */
@@ -236,14 +298,23 @@
   background: rgb(var(--c-rust) / .45);
 }
 
+/* four punched holes spread down the margin */
 .holes {
   position: absolute;
   top: 28px;
   bottom: 28px;
   left: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.holes i {
   width: 11px;
-  background: radial-gradient(circle at 5.5px 5.5px, rgb(var(--c-paper-2)) 5px, transparent 5.6px) 0 0 / 11px 41.6px repeat-y;
-  filter: drop-shadow(0 1px 1px rgb(var(--shadow-ink) / .2));
+  height: 11px;
+  border-radius: 50%;
+  background: rgb(var(--c-paper-2));
+  box-shadow: inset 0 1px 2px rgb(var(--shadow-ink) / .25);
 }
 
 .tape {
@@ -307,7 +378,6 @@
   border-radius: 999px;
   background: rgb(var(--c-ink));
   color: rgb(var(--c-ivory));
-  opacity: .55;
   cursor: not-allowed;
 }
 
@@ -398,43 +468,46 @@
   .container { padding-inline: 40px; }
   .grid { gap: 28px; }
 
+  /* intro across, then mascot and note side by side (reference: two equal columns, 16px apart) */
   .left {
     grid-template:
       "eyebrow eyebrow"
       "title title"
       "sub sub"
       "lead lead"
-      "dog note" / auto minmax(0, 1fr);
-    gap: 0 24px;
+      "dog note" / minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 0 16px;
   }
 
   .eyebrow { font-size: 14px; }
   .title { margin-top: 6px; font-size: clamp(40px, 4vw, 58px); }
-  .hand { margin-top: 6px; font-size: 24px; }
-  .lead { margin-top: 18px; max-width: 34em; font-size: 18px; line-height: 1.55; }
-  .mascot { place-self: end start; margin-top: 0; padding-top: 64px; }
-  .figure { height: 220px; }
+  .hand { margin-top: 6px; font-size: 24px; text-underline-offset: 6px; }
+  .lead { margin-top: 14px; max-width: 36ch; font-size: 17px; line-height: 1.55; }
+  .mascot { place-self: center; justify-self: center; margin-top: 20px; padding-top: 52px; }
+  .figure { height: 150px; }
   .callout { display: block; }
 
   .sticky {
     align-self: center;
-    width: min(100%, 234px);
-    margin-top: 26px;
+    justify-self: start;
+    width: min(100%, 230px);
+    margin-top: 20px;
     padding: 20px 18px 16px;
     font-size: 20px;
     line-height: 1.25;
   }
 
   .sticky::before {
-    top: -10px;
+    top: -11px;
     left: calc(50% - 36px);
     width: 72px;
-    height: 20px;
+    height: 22px;
   }
 
   .notebook { padding: 26px 16px 22px 44px; }
-  .notebook::before { left: 32px; }
-  .holes { left: 12px; }
+  .notebook::before { left: 36px; }
+  .holes { left: 9px; }
   .nbTitle { display: block; }
   .composer { min-height: 61.6px; margin-top: 16px; padding: 6px 6px 6px 16px; border-radius: 20px; }
   .send { width: 48px; height: 48px; }
@@ -467,6 +540,10 @@
   .cardArrow { display: block; flex-shrink: 0; color: rgb(var(--c-ink)); }
 }
 
+@media (min-width: 768px) {
+  .figure { height: 220px; }
+}
+
 @media (min-width: 1024px) {
   .container { padding-inline: 64px; }
 
@@ -486,11 +563,11 @@
     gap: 0 8px;
   }
 
-  .mascot { align-self: end; margin-top: -64px; padding-top: 64px; }
+  .lead { margin-top: 18px; font-size: 18px; }
+  .mascot { align-self: end; justify-self: auto; margin-top: -64px; padding-top: 64px; }
   .figure { height: clamp(240px, 20vw, 290px); }
-  .sticky { align-self: start; }
+  .sticky { align-self: start; margin-top: 26px; }
   .notebook { padding: 34px 26px 30px 62px; }
-  .notebook::before { left: 44px; }
   .holes { left: 16px; }
 }
 
@@ -503,7 +580,8 @@
 }
 
 @media (max-width: 1023px) {
-  .scrapGrid { display: none; }
+  .scrapGrid,
+  .leaf { display: none; }
 }
 
 @media (max-width: 639px) {
@@ -513,4 +591,33 @@
 
 @media (max-width: 639px) and (max-height: 780px) {
   .sticky { display: none; }
+}
+
+@media (max-width: 639px) and (max-height: 640px) {
+  .figure { height: 72px; }
+  .lead { margin-top: 6px; font-size: 14px; line-height: 1.38; }
+  .title { font-size: clamp(30px, 9.4vw, 36px); }
+  .hand { font-size: 18px; }
+}
+
+/* ---------- entrance (reference timings) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .grid[data-in] :is(.eyebrow, .title, .hand, .lead, .sticky) {
+    transition: opacity .48s var(--ease-reveal), translate .48s var(--ease-reveal);
+  }
+
+  .grid[data-in] .sticky { transition-delay: .2s; }
+  .grid[data-in] .mascot { transition: opacity .52s var(--ease-reveal) 80ms, scale .52s var(--ease-reveal) 80ms; }
+  .grid[data-in] .panel { transition: opacity .52s var(--ease-reveal) .12s, translate .52s var(--ease-reveal) .12s; }
+
+  .grid[data-in] .cardItem {
+    transition:
+      opacity .26s var(--ease-reveal) calc(.3s + var(--n) * 80ms),
+      translate .26s var(--ease-reveal) calc(.3s + var(--n) * 80ms);
+  }
+
+  .grid[data-armed]:not([data-in]) :is(.eyebrow, .title, .hand, .lead, .sticky) { opacity: 0; translate: 0 12px; }
+  .grid[data-armed]:not([data-in]) .mascot { opacity: 0; scale: .97; }
+  .grid[data-armed]:not([data-in]) .panel { opacity: 0; translate: 20px 0; }
+  .grid[data-armed]:not([data-in]) .cardItem { opacity: 0; translate: 0 8px; }
 }
