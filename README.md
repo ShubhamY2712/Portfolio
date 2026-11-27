@@ -1,10 +1,17 @@
 <a href="https://shubhamyawalkar.vercel.app"><picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/header-dark.svg" /><img src="./readme-assets/header-light.svg" width="100%" alt="Shubham Yawalkar waving from his desk. I shape and build AI products people can trust. Think like a user. Decide like a PM. Build like a developer." /></picture></a>
 
 <p align="center">
+  <picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/roles-dark.svg" /><img src="./readme-assets/roles-light.svg" width="640" alt="Hand me the messiest problem on your board. I'll hand back a product people trust. Open to AI PM and AI APM roles." /></picture>
+</p>
+
+<p align="center">
   <a href="https://shubhamyawalkar.vercel.app"><picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/btn-site-dark.svg" /><img src="./readme-assets/btn-site-light.svg" height="44" alt="Visit the site" /></picture></a>
   <a href="https://www.linkedin.com/in/shubham-yawalkar"><picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/btn-linkedin-dark.svg" /><img src="./readme-assets/btn-linkedin-light.svg" height="44" alt="LinkedIn" /></picture></a>
   <a href="mailto:work.shubhamyawalkar@gmail.com"><picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/btn-email-dark.svg" /><img src="./readme-assets/btn-email-light.svg" height="44" alt="Email: work.shubhamyawalkar@gmail.com" /></picture></a>
   <a href="https://shubhamyawalkar.vercel.app/Shubham-Yawalkar-AIPM-Resume.pdf"><picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/btn-resume-dark.svg" /><img src="./readme-assets/btn-resume-light.svg" height="44" alt="Resume (PDF)" /></picture></a>
+</p>
+<p align="center">
+  <a href="https://shubhamyawalkar.vercel.app"><img src="https://img.shields.io/website?url=https%3A%2F%2Fshubhamyawalkar.vercel.app&amp;label=site&amp;up_message=live&amp;down_message=down&amp;up_color=B64927&amp;down_color=5A6178&amp;labelColor=0D1735&amp;style=flat-square" alt="Site status" /></a>
 </p>
 
 <br />
@@ -34,8 +41,16 @@
 
 <br />
 
+<picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/head-made-dark.svg" /><img src="./readme-assets/head-made-light.svg" width="250" alt="How it's made" /></picture>
+
+<p align="center">
+  <picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/story-dark.svg" /><img src="./readme-assets/story-light.svg" width="100%" alt="Cutting chai, 11 p.m. One question on a napkin: what would make a recruiter stop scrolling? The napkin turned into a paper desk. The desk wanted a window. The window wanted a sky. The sky refused to stay sunny and turned itself into night. By chai number four, a paper version of me had climbed onto the desk, fixed his glasses and started waving. He hasn't stopped since. I told him to calm down. He got a hot-air balloon instead. Somewhere along the way the napkin became a website. The chai went cold. Worth it." /></picture>
+</p>
+
+<br />
+
 <p align="center">
   <picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/stack-dark.svg" /><img src="./readme-assets/stack-light.svg" width="640" alt="Built with Next.js 14, TypeScript, Tailwind, Motion, Lenis, GSAP, Supabase and Vercel." /></picture>
 </p>
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/footer-dark.svg" /><img src="./readme-assets/footer-light.svg" width="100%" alt="Shubham in a hot-air balloon. Let's connect. Let's build what people trust. From a messy problem to a product people trust. © 2026 Shubham Yawalkar. All rights reserved." /></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/footer-dark.svg" /><img src="./readme-assets/footer-light.svg" width="100%" alt="Shubham in a hot-air balloon. Let's connect. Let's build what people trust. From a messy problem to a product people trust. © 2026 Shubham Yawalkar. The art, writing and design are mine; please ask before reusing them." /></picture>
