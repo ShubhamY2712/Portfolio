@@ -43,7 +43,7 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="./readme-assets/stack-dark.webp" />
-    <img src="./readme-assets/stack-light.webp" width="420" alt="Built with Next.js 14, TypeScript, Tailwind, Motion, Lenis, GSAP, Supabase and Vercel." />
+    <img src="./readme-assets/stack-light.webp" width="520" alt="Built with Next.js 14, TypeScript, Tailwind, Motion, Lenis, GSAP, Supabase and Vercel." />
   </picture>
 </p>
 
