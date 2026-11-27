@@ -1,0 +1,88 @@
+/* Grid ≥640px; below that a snap carousel with pill dots (reference: dots 44px hit areas,
+   8px dots, active = 24 × 8 terracotta pill, 4px above, grid padding 6 8 16, gap 16). */
+
+.carousel { display: contents; }
+
+.grid {
+  display: grid;
+  gap: clamp(12px, 1.4vw, 20px);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dots { display: none; }
+
+@media (max-width: 639px) {
+  .carousel {
+    display: block;
+    min-width: 0;
+  }
+
+  .grid {
+    display: flex;
+    gap: 16px;
+    margin: -6px -8px 0;
+    padding: 6px 8px 16px;
+    scroll-padding-inline: 8px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .grid::-webkit-scrollbar { display: none; }
+
+  .grid > li {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  .dots {
+    position: relative;
+    display: flex;
+    width: max-content;
+    height: 44px;
+    margin: 4px auto 0;
+  }
+
+  .dot {
+    display: grid;
+    place-items: center;
+    flex: 0 0 44px;
+    height: 44px;
+    margin-inline: -8px;
+    padding: 0;
+    border: 0;
+    border-radius: 10px;
+    background: none;
+    cursor: pointer;
+  }
+
+  .dot > span {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: rgb(var(--c-ink) / .3);
+  }
+
+  .dot[aria-current="true"] > span { background: none; }
+
+  .pill {
+    position: absolute;
+    top: 18px;
+    left: 0;
+    width: 24px;
+    height: 8px;
+    border-radius: 999px;
+    background: rgb(var(--c-terracotta));
+    pointer-events: none;
+    transition: translate .3s var(--ease-paper);
+  }
+}
+
+@media (max-width: 639px) and (prefers-reduced-motion: reduce) {
+  .pill { transition: none; }
+}

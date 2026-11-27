@@ -1,0 +1,86 @@
+/* Hero scene: the full 2560:1441 picture at every width (nothing cropped); layers drift
+   with pointer and scroll. The torn edge below belongs to the intro sheet. */
+
+.hero {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2560 / 1441;
+}
+
+/* clips the layers' 30px bleed */
+.stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  --mx: 0;
+  --my: 0;
+}
+
+.layer {
+  position: absolute;
+  inset: -30px;
+  pointer-events: none;
+  translate: calc(var(--mx) * var(--par) * var(--rng) * -1) calc(var(--my) * var(--par) * var(--rng) * -1);
+  transition: translate .5s var(--ease-paper);
+}
+
+.layer img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  user-select: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    /* the scene sinks at half the scroll speed for the first screen (reference: 0 → 50vh) */
+    .hero {
+      animation: sink linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0px 100vh;
+    }
+
+    /* each layer shifts ±12px × depth while the scene crosses the viewport */
+    .layer {
+      animation: depth linear both;
+      animation-timeline: view();
+    }
+  }
+}
+
+@keyframes sink {
+  from { translate: 0 0; }
+  to { translate: 0 50vh; }
+}
+
+@keyframes depth {
+  from { transform: translateY(calc(var(--par) * -12px)); }
+  to { transform: translateY(calc(var(--par) * 12px)); }
+}
+
+/* "Tap & tilt" paper label, top-left of the scene (reference: 44px tall, 16px in) */
+.tilt {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 1;
+  height: 44px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--tilt-bg);
+  color: rgb(var(--c-ink));
+  font: 600 14px/1.2 var(--f-body);
+  box-shadow: 2px 2px 0 rgb(var(--c-mat-side)), 1px 2px 2px rgb(var(--shadow-ink) / .3);
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .layer {
+    transition: none;
+    translate: none;
+  }
+}

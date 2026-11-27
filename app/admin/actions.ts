@@ -203,7 +203,7 @@ export async function updateProject(slug: string, formData: FormData): Promise<v
     })
     .eq("slug", slug);
   revalidatePath("/");
-  revalidatePath(`/${slug}`);
+  revalidatePath(`/work/${slug}`);
   revalidatePath("/admin/projects");
   revalidatePath(`/admin/projects/${slug}`);
 }
@@ -220,7 +220,7 @@ export async function updateProjectEmbeds(slug: string, formData: FormData): Pro
       eval_sheet_url: formUrl(formData, "eval_sheet_url"),
     })
     .eq("slug", slug);
-  revalidatePath(`/${slug}`);
+  revalidatePath(`/work/${slug}`);
   revalidatePath(`/admin/projects/${slug}`);
 }
 
@@ -231,7 +231,7 @@ export async function uploadProjectPrd(slug: string, formData: FormData): Promis
   const supabase = createClient();
   await supabase.from("projects").update({ prd_link: url }).eq("slug", slug);
   revalidatePath("/");
-  revalidatePath(`/${slug}`);
+  revalidatePath(`/work/${slug}`);
 }
 
 export async function uploadProjectCover(slug: string, formData: FormData): Promise<void> {
@@ -246,7 +246,7 @@ export async function uploadProjectCover(slug: string, formData: FormData): Prom
     await supabase.from("projects").update({ cover_alt: alt }).eq("slug", slug);
   }
   revalidatePath("/");
-  revalidatePath(`/${slug}`);
+  revalidatePath(`/work/${slug}`);
   revalidatePath(`/admin/projects/${slug}`);
 }
 
@@ -255,7 +255,7 @@ export async function removeProjectCover(slug: string): Promise<void> {
   // Clears the link only; the file stays in Storage.
   await supabase.from("projects").update({ cover_url: null }).eq("slug", slug);
   revalidatePath("/");
-  revalidatePath(`/${slug}`);
+  revalidatePath(`/work/${slug}`);
   revalidatePath(`/admin/projects/${slug}`);
 }
 

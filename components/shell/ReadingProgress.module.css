@@ -1,0 +1,29 @@
+.bar {
+  display: none;
+}
+
+/* Browsers without scroll-driven animations simply don't show the bar. */
+@supports (animation-timeline: scroll()) {
+  .bar {
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -6px;
+    z-index: 1;
+    height: 3px;
+    background: rgb(var(--c-rust));
+    transform-origin: left center;
+    animation: fill linear both;
+    animation-timeline: scroll(root);
+  }
+}
+
+@keyframes fill {
+  from { scale: 0 1; }
+  to { scale: 1 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar { display: none; }
+}

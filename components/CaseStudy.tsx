@@ -1,15 +1,11 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { ArrowLeft, Github, FileText } from "lucide-react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import AnimatedSection from "@/components/AnimatedSection";
 import EmbedSlots from "@/components/EmbedSlots";
-import { createClient } from "@/lib/supabase/server";
 import { safeUrl } from "@/lib/content";
-import type { Profile } from "@/lib/content";
 
-export default async function CaseStudy({
+export default function CaseStudy({
   name,
   tag,
   role,
@@ -40,18 +36,12 @@ export default async function CaseStudy({
   coverUrl?: string | null;
   coverAlt?: string | null;
 }) {
-  const supabase = createClient();
-  const { data } = await supabase.from("profile").select("*").eq("id", 1).single();
-  const profile = data as Profile | null;
-
   const inProgress: boolean = /present/i.test(dates);
   const hasArtifacts: boolean = Boolean(safeUrl(figmaUrl) || safeUrl(loomUrl) || safeUrl(evalSheetUrl));
   const hasLinks: boolean = Boolean(prdLink || githubLink);
 
   return (
-    <>
-      <Navbar name={profile?.name || ""} resumeUrl={profile?.resume_url} />
-      <main id="main">
+    <main id="main">
         <article className="max-w-content mx-auto px-5 pb-10 pt-10 sm:px-6 sm:pt-14">
           <Link
             href="/#projects"
@@ -94,7 +84,7 @@ export default async function CaseStudy({
 
           {coverUrl && (
             <AnimatedSection className="mb-12 sm:mb-16">
-              <div className="overflow-hidden rounded-2xl border border-line shadow-[0_0_80px_-24px_rgba(255,197,61,0.4)]">
+              <div className="overflow-hidden rounded-2xl border border-line shadow-[0_0_80px_-24px_rgb(var(--c-rust)/0.4)]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={coverUrl}
@@ -161,16 +151,6 @@ export default async function CaseStudy({
           </div>
         </article>
       </main>
-      <Footer
-        name={profile?.name || ""}
-        email={profile?.email || ""}
-        linkedin={profile?.linkedin}
-        github={profile?.github}
-        resumeUrl={profile?.resume_url}
-        location={profile?.location}
-        contactLine={profile?.statement || undefined}
-      />
-    </>
   );
 }
 
