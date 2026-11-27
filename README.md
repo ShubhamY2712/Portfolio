@@ -1,9 +1,4 @@
-<a href="https://shubhamyawalkar.vercel.app">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./readme-assets/header-dark.svg" />
-    <img src="./readme-assets/header-light.svg" width="100%" alt="Shubham Yawalkar. I shape and build AI products people can trust. Think like a user, decide like a PM, build like a developer." />
-  </picture>
-</a>
+<a href="https://shubhamyawalkar.vercel.app"><picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/header-dark.svg" /><img src="./readme-assets/header-light.svg" width="100%" alt="Shubham Yawalkar waving from his desk. I shape and build AI products people can trust. Think like a user. Decide like a PM. Build like a developer." /></picture></a>
 
 <p align="center">
   <a href="https://shubhamyawalkar.vercel.app"><picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/btn-site-dark.svg" /><img src="./readme-assets/btn-site-light.svg" height="44" alt="Visit the site" /></picture></a>
@@ -14,40 +9,33 @@
 
 <br />
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./readme-assets/head-work-dark.svg" />
-  <img src="./readme-assets/head-work-light.svg" width="420" alt="Selected work: from messy problems to working AI products." />
-</picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/head-pages-dark.svg" /><img src="./readme-assets/head-pages-light.svg" width="300" alt="Pages: five rooms, one desk." /></picture>
 
-<p>
-  <a href="https://shubhamyawalkar.vercel.app/projects?product=invai"><picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/work-1-dark.svg" /><img src="./readme-assets/work-1-light.svg" width="32%" alt="InvAI (AI, SaaS, Supply chain), in progress: AI-powered, multi-tenant SaaS for supply chain intelligence, from single-store retailers to franchises." /></picture></a>
-  <a href="https://shubhamyawalkar.vercel.app/projects?product=creditsaathi"><picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/work-2-dark.svg" /><img src="./readme-assets/work-2-light.svg" width="32%" alt="CreditSaathi (AI, ML, FinTech), prototype: alternative credit scoring for gig workers and MSMEs, with an open fairness audit built in." /></picture></a>
-  <a href="https://shubhamyawalkar.vercel.app/projects?product=groundtruth"><picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/work-3-dark.svg" /><img src="./readme-assets/work-3-light.svg" width="32%" alt="Groundtruth (AI, Data, Strategy), live prototype: helps companies pick where to open their first India GCC, with every number linked to its source." /></picture></a>
+<p align="center">
+  <a href="https://shubhamyawalkar.vercel.app/"><picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/page-home-dark.svg" /><img src="./readme-assets/page-home-light.svg" width="19%" alt="Home: intro, selected work and credentials." /></picture></a>
+  <a href="https://shubhamyawalkar.vercel.app/work"><picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/page-experience-dark.svg" /><img src="./readme-assets/page-experience-light.svg" width="19%" alt="Experience: roles, and what I did in each one." /></picture></a>
+  <a href="https://shubhamyawalkar.vercel.app/projects"><picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/page-portfolio-dark.svg" /><img src="./readme-assets/page-portfolio-light.svg" width="19%" alt="Portfolio: products I've built, with case studies." /></picture></a>
+  <a href="https://shubhamyawalkar.vercel.app/about"><picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/page-about-dark.svg" /><img src="./readme-assets/page-about-light.svg" width="19%" alt="About: my story and published research." /></picture></a>
+  <a href="https://shubhamyawalkar.vercel.app/certifications"><picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/page-certs-dark.svg" /><img src="./readme-assets/page-certs-light.svg" width="19%" alt="Certifications: courses and certificates." /></picture></a>
 </p>
 
 <br />
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./readme-assets/head-cred-dark.svg" />
-  <img src="./readme-assets/head-cred-light.svg" width="300" alt="Credentials: where I've made an impact." />
-</picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/head-features-dark.svg" /><img src="./readme-assets/head-features-light.svg" width="320" alt="Features: two new ways to explore." /></picture>
 
-<p>
-  <a href="https://shubhamyawalkar.vercel.app/work"><picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/cred-1-dark.svg" /><img src="./readme-assets/cred-1-light.svg" width="32%" alt="Pinaka Intelligence: Product Intern, Oct 2026 to present. Product, Growth and Technology." /></picture></a>
-  <a href="https://shubhamyawalkar.vercel.app/projects"><picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/cred-2-dark.svg" /><img src="./readme-assets/cred-2-light.svg" width="32%" alt="Product Builder: products I lead, end to end, Apr 2026 to present. InvAI, CreditSaathi, Groundtruth." /></picture></a>
-  <a href="https://shubhamyawalkar.vercel.app/about#research"><picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/cred-3-dark.svg" /><img src="./readme-assets/cred-3-light.svg" width="32%" alt="Published research: co-author, The Impact of AI in the Indian Economy, Sep 2025. Nova, AI and Economy." /></picture></a>
+<p align="center">
+  <a href="https://shubhamyawalkar.vercel.app"><picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/feat-tour-dark.svg" /><img src="./readme-assets/feat-tour-light.svg" width="49%" alt="Take a tour, a 30-second look around (coming soon): walks you through the pages and products, so you see the best parts first." /></picture></a>
+  <a href="https://shubhamyawalkar.vercel.app/#ask"><picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/feat-ask-dark.svg" /><img src="./readme-assets/feat-ask-light.svg" width="49%" alt="Ask Shubham, my AI portfolio assistant (coming soon): ask about my work, projects or skills. Every answer comes from this portfolio." /></picture></a>
+</p>
+
+<p align="center">
+  <picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/extras-dark.svg" /><img src="./readme-assets/extras-light.svg" width="640" alt="Also: light and dark sky you can switch; phone-friendly, with a bottom dock; edited from a private admin page; resume one click away." /></picture>
 </p>
 
 <br />
 
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./readme-assets/stack-dark.svg" />
-    <img src="./readme-assets/stack-light.svg" width="640" alt="Built with Next.js 14, TypeScript, Tailwind, Motion, Lenis, GSAP, Supabase and Vercel." />
-  </picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/stack-dark.svg" /><img src="./readme-assets/stack-light.svg" width="640" alt="Built with Next.js 14, TypeScript, Tailwind, Motion, Lenis, GSAP, Supabase and Vercel." /></picture>
 </p>
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./readme-assets/footer-dark.svg" />
-  <img src="./readme-assets/footer-light.svg" width="100%" alt="Let's connect. Let's build what people trust. From a messy problem to a product people trust. © 2026 Shubham Yawalkar. All rights reserved." />
-</picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/footer-dark.svg" /><img src="./readme-assets/footer-light.svg" width="100%" alt="Shubham in a hot-air balloon. Let's connect. Let's build what people trust. From a messy problem to a product people trust. © 2026 Shubham Yawalkar. All rights reserved." /></picture>
