@@ -40,14 +40,14 @@
   <picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/story-dark.svg" /><img src="./readme-assets/story-light.svg" width="100%" alt="Cutting chai, 11 p.m. One question on a napkin: what would make a recruiter stop scrolling? The napkin turned into a paper desk. The desk wanted a window. The window wanted a sky. The sky refused to stay sunny and turned itself into night. By chai number four, a paper version of me had climbed onto the desk, fixed his glasses and started waving. He hasn't stopped since. I told him to calm down. He got a hot-air balloon instead. Somewhere along the way the napkin became a website. The chai went cold. Worth it." /></picture>
 </p>
 
+<p align="center">
+  <picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/stack-dark.svg" /><img src="./readme-assets/stack-light.svg" width="640" alt="Built with Next.js 14, TypeScript, Tailwind, Motion, Lenis, GSAP, Supabase and Vercel." /></picture>
+</p>
+
 <br />
 
 <p align="center">
   <picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/roles-dark.svg" /><img src="./readme-assets/roles-light.svg" width="640" alt="Hand me the messiest problem on your board. I'll hand back a product people trust. Open to AI PM and AI APM roles." /></picture>
-</p>
-
-<p align="center">
-  <picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/stack-dark.svg" /><img src="./readme-assets/stack-light.svg" width="640" alt="Built with Next.js 14, TypeScript, Tailwind, Motion, Lenis, GSAP, Supabase and Vercel." /></picture>
 </p>
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="./readme-assets/footer-dark.svg" /><img src="./readme-assets/footer-light.svg" width="100%" alt="Shubham in a hot-air balloon. Let's connect. Let's build what people trust. From a messy problem to a product people trust. © 2026 Shubham Yawalkar. The art, writing and design are mine; please ask before reusing them." /></picture>
